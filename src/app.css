@@ -1,0 +1,111 @@
+/* ============================================================
+   COPABLES — Global: font declarations + design tokens
+   ============================================================ */
+
+/* ── Sawton Circular ──────────────────────────────────────── */
+@font-face {
+  font-family: 'Sawton Circular';
+  src: url('/fonts/sawtoncircular/sawtoncircular-light-webfont.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sawton Circular';
+  src: url('/fonts/sawtoncircular/sawtoncircular-regular-webfont.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sawton Circular';
+  src: url('/fonts/sawtoncircular/sawtoncircular-medium-webfont.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sawton Circular';
+  src: url('/fonts/sawtoncircular/sawtoncircular-bold-webfont.ttf') format('truetype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Design tokens — globally available to every page ─────── */
+:root {
+  /* paper / ink */
+  --paper:    #FBF6EA;
+  --paper-2:  #F3E9D4;
+  --card:     #FFFFFF;
+  --ink:      #14130F;
+  --ink-2:    #1C1A15;
+  --ink-soft: #544F43;
+  --line:     rgba(20,19,15,.12);
+  --line-2:   rgba(20,19,15,.07);
+
+  /* accents */
+  --blue:        #2F95F2;
+  --blue-deep:   #1A6FC4;
+  --blue-tint:   #E7F1FD;
+  --orange:      #F2901E;
+  --orange-deep: #D9760A;
+  --orange-tint: #FBE8CE;
+  --wine:        #8A2433;
+  --green-ok:    #2E9E6B;
+
+  /* live accent (defaults to blue; pages can override) */
+  --accent:      var(--blue);
+  --accent-deep: var(--blue-deep);
+  --accent-tint: var(--blue-tint);
+
+  /* layout */
+  --maxw:      1160px;
+  --radius:    18px;
+  --radius-lg: 28px;
+
+  /* shadows */
+  --shadow-sm: 0 1px 2px rgba(20,19,15,.06), 0 4px 14px rgba(20,19,15,.05);
+  --shadow-md: 0 8px 30px rgba(20,19,15,.10);
+  --shadow-lg: 0 24px 60px rgba(20,19,15,.16);
+
+  /* typography */
+  --ff: "Sawton Circular", system-ui, -apple-system, sans-serif;
+}
+
+/* ── Global resets ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  font-family: var(--ff);
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* iOS safe-area support */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+img, video { display: block; max-width: 100%; }
+
+/* iOS / mobile optimization */
+button, a, input, select, textarea, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Ensure minimum touch target size on mobile */
+@media (max-width: 900px) {
+  button, a, input, select, textarea, [role="button"], .btn, .q-opt {
+    min-height: 44px;
+  }
+}
+
+/* quiz page — body overflow lock */
+body.quiz-body { overflow: hidden; height: 100%; }
+html:has(body.quiz-body) { height: 100%; }

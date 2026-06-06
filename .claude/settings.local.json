@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__svelte__svelte-autofixer",
+      "Bash(npx vite *)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(curl -s --max-filesize 2000000 \"https://api.anthropic.com/v1/design/h/Jiwc6wVJo9Hw9xWazE-0yQ?open_file=prelander.html\" -o /tmp/design_prelander.html)",
+      "Bash(echo \"Exit: $?\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -r 0-500000 \"https://api.anthropic.com/v1/design/h/Jiwc6wVJo9Hw9xWazE-0yQ?open_file=prelander.html\")",
+      "Bash(curl -s --compressed \"https://api.anthropic.com/v1/design/h/Jiwc6wVJo9Hw9xWazE-0yQ?open_file=prelander.html\" -o /tmp/prelander_raw.html)",
+      "Bash(gunzip -c /tmp/prelander_raw.html)",
+      "Read(//private/tmp/**)",
+      "Bash(tar -x)",
+      "Bash(grep -v \"^$\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:5173/fonts/sawtoncircular/sawtoncircular-regular-webfont.ttf\")",
+      "Bash(kill %1)",
+      "mcp__svelte__get-documentation",
+      "Bash(curl -s --compressed \"https://api.anthropic.com/v1/design/h/DY8M8-5-8XmXRLzwp2Bh6g?open_file=Copables+Quiz.html\" -o /tmp/quiz_bundle.tar.gz)",
+      "Bash(gunzip -c /tmp/quiz_bundle.tar.gz)",
+      "Bash(curl -sS -L -i \"https://api.anthropic.com/v1/design/h/DY8M8-5-8XmXRLzwp2Bh6g\")",
+      "Bash(curl -sS -i -L \"https://api.anthropic.com/v1/design/h/DY8M8-5-8XmXRLzwp2Bh6g?open_file=Copables+Quiz.html\")",
+      "Bash(curl -sS -o /dev/null -w \"final=%{url_effective} code=%{http_code}\\\\n\" -L \"https://api.anthropic.com/v1/design/\")",
+      "Bash(mkdir -p .design-tmp)",
+      "Bash(curl -sS -D - -o .design-tmp/base.out __TRACKED_VAR__?open_file=Copables+Quiz.html)",
+      "Bash(mv base.out handoff.tar.gz)",
+      "Bash(mkdir -p extracted)",
+      "Bash(tar -xzf handoff.tar.gz -C extracted)",
+      "Bash(awk '{print $5\"\\\\t\"$NF}')",
+      "Bash(mkdir -p static/assets)",
+      "Bash(cp __TRACKED_VAR__/wordmark.png __TRACKED_VAR__/face.png __TRACKED_VAR__/ibs-bottle.png static/assets/)",
+      "Bash(awk 'NR>1 {print $5, $NF}')",
+      "Bash(npx svelte-kit *)",
+      "Bash(command -v pngquant)",
+      "Bash(pngquant --quality=70-90 --strip --force --ext .png ibs-bottle.png)",
+      "Bash(command -v sips)",
+      "Bash(sips --resampleWidth 640 ibs-bottle.png)"
+    ]
+  }
+}
