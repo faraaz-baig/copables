@@ -148,7 +148,7 @@
 		padding: 11px 20px;
 		border-radius: 999px;
 		background: #F2901E;
-		color: #fff;
+		color: #14130F;
 		font-size: 14px;
 		font-weight: 800;
 		letter-spacing: -0.01em;
