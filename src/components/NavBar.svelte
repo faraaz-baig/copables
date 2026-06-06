@@ -147,7 +147,7 @@
 		gap: 10px;
 		padding: 11px 20px;
 		border-radius: 999px;
-		background: var(--accent);
+		background: #F2901E;
 		color: #fff;
 		font-size: 14px;
 		font-weight: 800;
@@ -155,16 +155,16 @@
 		text-decoration: none;
 		white-space: nowrap;
 		line-height: 1;
-		box-shadow: 0 6px 0 var(--accent-deep);
+		box-shadow: 0 6px 0 #D9760A;
 		transition: transform .14s ease, box-shadow .2s ease;
 	}
 	.nav__cta a:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 8px 0 var(--accent-deep);
+		box-shadow: 0 8px 0 #D9760A;
 	}
 	.nav__cta a:active {
 		transform: translateY(2px);
-		box-shadow: 0 3px 0 var(--accent-deep);
+		box-shadow: 0 3px 0 #D9760A;
 	}
 
 	@media (max-width: 1024px) {
