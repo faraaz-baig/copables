@@ -145,19 +145,19 @@
 		display: inline-block;
 		padding: 11px 20px;
 		border-radius: 999px;
-		background: #F0BE38;
-		color: #14130F;
+		background: #DE541E;
+		color: #fff;
 		font-size: 14px;
 		font-weight: 700;
 		text-decoration: none;
 		letter-spacing: -0.005em;
 		white-space: nowrap;
-		box-shadow: 0 4px 14px rgba(240, 190, 56, 0.35);
+		box-shadow: 0 4px 14px rgba(222, 84, 30, 0.35);
 		transition: transform 0.15s ease, box-shadow 0.15s ease;
 	}
 	.nav__cta a:hover {
 		transform: translateY(-1px);
-		box-shadow: 0 6px 20px rgba(240, 190, 56, 0.45);
+		box-shadow: 0 6px 20px rgba(222, 84, 30, 0.45);
 	}
 
 	@media (max-width: 1024px) {
