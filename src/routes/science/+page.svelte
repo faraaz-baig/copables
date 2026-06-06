@@ -21,7 +21,7 @@
 		body: `The double-blind trial — where neither patient nor doctor knows which pill is which — is the standard for proving a drug works. So in 2021, the Harvard group ran the obvious experiment. 262 IBS patients, six weeks, three groups: open-label placebo, double-blind placebo (disguised as either a sugar pill or peppermint oil, the way a real drug trial would run it), or no treatment at all. The two placebo groups improved by the same amount. Statistically, you couldn't tell them apart. Hiding the pill didn't make it work better.`,
 		cite: 'Lembo et al., 2021, PAIN.',
 		url: 'https://journals.lww.com/pain/Fulltext/2021/09000/Open_label_placebo_vs_double_blind_placebo_for.6.aspx',
-		bg: '#000', fg: '#fff', citeBorder: 'rgba(255,255,255,0.5)'
+		bg: '#422040', fg: '#FFE9F4', citeBorder: 'rgba(255,233,244,0.45)'
 	};
 	const framing = {
 		kicker: 'Framing matters',

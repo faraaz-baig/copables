@@ -77,7 +77,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
-  overflow-x: hidden;
+  /* `clip` (not `hidden`) prevents horizontal scroll WITHOUT making html a
+     scroll container — `hidden` here silently disables position:sticky everywhere. */
+  overflow-x: clip;
 }
 body {
   margin: 0;
@@ -86,7 +88,7 @@ body {
   background: #fff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
   /* iOS safe-area support */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
