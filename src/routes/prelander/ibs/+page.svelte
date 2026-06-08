@@ -538,9 +538,9 @@
 		{#each Array(24) as _, i (i)}<i></i>{/each}
 	</span>
 	<div class="wrap">
-		<span class="face-badge">
-			<span class="face-text">ôp</span>
-		</span>
+		<div class="final-badge">
+			<img src="/assets/face.webp" alt="copables" />
+		</div>
 		<p class="final-eyebrow">Mind over medicine</p>
 		<h2 class="final-h">Ready to quiet your gut?</h2>
 		<p class="final-sub">Take the 60-second quiz and see if the 14-Day IBS Protocol is right for you. No commitment — just answers.</p>
@@ -552,17 +552,6 @@
 		</div>
 	</div>
 </section>
-
-<!-- ── FOOTER ───────────────────────────────────────── -->
-<footer class="footer">
-	<div class="wrap" style="padding-top:40px">
-		<span class="footer-wordmark">copables</span>
-		<div class="links">
-			<a href="#">Reviews</a><a href="#">Contact</a><a href="#">Terms</a><a href="#">Privacy</a>
-		</div>
-		<p class="legal">*Disclaimer: Copables is a self-guided wellness program that may help some people self-manage and live well with IBS. It is not a substitute for medical care and has not been evaluated by the FDA. Do not change any prescribed medication or treatment without consulting a qualified healthcare professional. Statistics cited reflect published research and aggregate member feedback; individual results vary. © 2026 Copables. All rights reserved.</p>
-	</div>
-</footer>
 
 </main>
 </div>
@@ -898,12 +887,14 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .final-wave :global(i:nth-child(3n+1)) { background:var(--orange); }
 .final-wave :global(i:nth-child(3n+2)) { background:var(--blue); }
 .final-wave :global(i:nth-child(3n))   { background:var(--wine); }
-.face-badge {
-	display:grid; place-items:center; width:96px; height:96px; margin:0 auto 28px;
-	background:var(--paper); border-radius:26px;
-	box-shadow:0 12px 30px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.04);
+.final-badge {
+	width:84px; height:84px; margin:0 auto 28px;
+	border-radius:50%; overflow:hidden;
+	background:var(--paper);
+	border:3px solid var(--paper);
+	box-shadow:0 12px 30px rgba(0,0,0,.45);
 }
-.face-text { font-family:var(--ff); font-size:28px; font-weight:900; color:var(--ink); letter-spacing:-0.04em; }
+.final-badge img { width:100%; height:100%; object-fit:cover; display:block; }
 .final-eyebrow { font-weight:800; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin:0 0 16px; }
 .final-h { font-size:clamp(44px,6.5vw,82px); font-weight:800; line-height:0.97; letter-spacing:-0.04em; color:var(--paper); margin:0 auto 24px; max-width:14ch; }
 .final-sub { font-size:clamp(17px,1.7vw,21px); line-height:1.5; color:rgba(251,246,234,.74); max-width:40ch; margin:0 auto 38px; }
@@ -911,19 +902,6 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .final-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:26px; }
 .fchip { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:rgba(251,246,234,.9); background:rgba(251,246,234,.06); border:1px solid rgba(251,246,234,.16); padding:9px 16px; border-radius:999px; }
 .fchip i { font-style:normal; color:var(--accent); font-weight:900; }
-@media (prefers-reduced-motion:no-preference) {
-	.face-badge { animation:faceFloat 5.5s ease-in-out infinite; }
-	@keyframes faceFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
-}
-
-/* ── Footer ──────────────────────────────────────── */
-.footer { background:var(--ink); color:rgba(251,246,234,.62); padding:0 0 50px; }
-.footer .wrap { display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center; }
-.footer-wordmark { font-family:var(--ff); font-weight:900; font-size:20px; color:rgba(251,246,234,.7); letter-spacing:-0.03em; }
-.links { display:flex; gap:20px; flex-wrap:wrap; font-size:13.5px; font-weight:600; }
-.links a { text-decoration:none; opacity:.8; color:inherit; }
-.links a:hover { opacity:1; }
-.legal { width:100%; font-size:11.5px; line-height:1.5; color:rgba(251,246,234,.4); border-top:1px solid rgba(251,246,234,.12); padding-top:22px; margin-top:6px; }
 
 /* ── Reveal animation ────────────────────────────── */
 /* .in is added by JS at runtime — :global prevents Svelte tree-shaking it away */

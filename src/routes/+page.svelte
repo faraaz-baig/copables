@@ -96,7 +96,7 @@
 				<p class="snum reveal"><span class="n">01</span> The problem <span class="rule"></span></p>
 				<div class="prob-intro reveal">
 					<h2 class="dhead dhead--lg measure-h">Where conventional care runs out.</h2>
-					<p>You've done every test. Bloodwork, ultrasound, stool samples — all clear. And yet, it isn't. For millions, the diagnosis is one of exclusion, and the treatment never quite resolves.</p>
+					<p>You've tried the standard path. Tests come back clear. Medication takes the edge off, but never quite resolves it. For millions, the diagnosis is one of exclusion — and the cycle continues.</p>
 				</div>
 
 				<div class="prob-grid">
@@ -118,7 +118,7 @@
 							</g></svg>
 						</div>
 						<h3>Treated, not resolved.</h3>
-						<p>Medication manages the symptom. On first-line drugs, most patients still miss the responder threshold — the cycle continues.</p>
+						<p>Medication manages the symptom. On first-line drugs, most patients still miss the responder threshold — so you try the next thing, and the next.</p>
 					</div>
 
 					<div class="qcard tint-blue reveal">
@@ -141,7 +141,7 @@
 							</g></svg>
 						</div>
 						<h3>Neural, not chemical.</h3>
-						<p>Brain–gut–immune signalling is how the body creates symptoms. Most drugs simply don't speak that language.</p>
+						<p>Your brain and body are in constant conversation. Most drugs don't speak that language — they target chemistry, not the signalling that creates symptoms in the first place.</p>
 					</div>
 
 					<div class="qcard tint-rose reveal">
@@ -181,79 +181,8 @@
 						<p>Studies have shown that non-deceptive placebos can cause your brain to produce the very same symptom-relieving chemicals present in real pharmacology.</p>
 						<a class="btn btn--primary" href="/science" onclick={() => trackCTA('science_evidence')}>See the Science <span class="arrow">→</span></a>
 					</div>
-					<div class="edit__media" style="background:#E8F0FE; display:grid; place-items:center;">
-						<svg viewBox="0 0 240 240" class="science-chalk" aria-hidden="true" style="width:85%; height:auto;">
-							<g filter="url(#chalk)" fill="none" stroke="#1A3A6B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-								<!-- Hand-drawn brain — organic, lumpy outline -->
-								<path d="M120 44 
-									c-8 -2 -16 0 -22 6 
-									c-6 -3 -14 -2 -20 4 
-									c-6 2 -10 8 -8 16 
-									c-4 6 -6 14 -2 22 
-									c-2 8 2 16 8 22 
-									c2 8 8 14 16 18 
-									c6 6 14 10 24 10 
-									c8 2 16 0 24 -4 
-									c8 2 16 -2 22 -8 
-									c6 -4 10 -10 10 -18 
-									c4 -6 6 -14 4 -22 
-									c2 -8 -2 -16 -8 -22 
-									c-2 -8 -8 -14 -16 -18 
-									c-6 -6 -14 -10 -24 -10 
-									c-6 -2 -12 -2 -18 0 
-									c-6 -4 -12 -4 -18 -2 
-									c-6 2 -10 6 -12 12 
-									c-4 4 -6 10 -4 16 
-									c-2 6 0 12 4 18 
-									c2 6 6 12 12 16 
-									c4 4 10 8 16 10 
-									c6 2 12 2 18 0 
-									c6 2 12 2 18 -2 
-									c6 -2 10 -6 12 -12 
-									c4 -4 6 -10 4 -16 
-									c2 -6 0 -12 -4 -18 
-									c-2 -6 -6 -12 -12 -16 
-									c-4 -4 -10 -8 -16 -10 
-									c-6 -2 -12 -2 -18 0 
-									c-6 -2 -12 -2 -18 2 
-									c-6 2 -10 6 -12 12 
-									c-4 4 -6 10 -4 16"/>
-
-								<!-- Squiggly fold lines -->
-								<path d="M88 82 c4 2 8 6 10 12 c2 6 2 12 0 18"/>
-								<path d="M152 82 c-4 2 -8 6 -10 12 c-2 6 -2 12 0 18"/>
-								<path d="M120 90 c2 4 2 10 0 18 c-2 8 -2 16 0 24"/>
-
-								<!-- Hand-drawn keyhole -->
-								<path d="M120 128 c4 -2 8 0 10 4 c2 4 0 8 -4 10 
-									l0 14 l-4 0 l0 -8 l-4 0 l0 8 l-4 0 l0 -14 
-									c-4 -2 -6 -6 -4 -10 c2 -4 6 -6 10 -4"/>
-
-								<!-- Hand-drawn key going in -->
-								<path d="M120 108 
-									c3 -2 7 -2 10 0 
-									c3 2 5 6 4 10 
-									c-1 4 -4 7 -8 8 
-									l0 6 l-3 0 l0 -4 l-3 0 l0 4 l-3 0 l0 -6 
-									c-4 -1 -7 -4 -8 -8 
-									c-1 -4 1 -8 4 -10 
-									c3 -2 7 -2 10 0"/>
-								<!-- Key ring -->
-								<path d="M116 104 c-2 -4 0 -8 4 -10 c4 -2 8 0 10 4"/>
-
-								<!-- Small floating capsule (hand-drawn) -->
-								<g transform="translate(175, 55) rotate(25)">
-									<path d="M0 6 c2 -4 6 -6 10 -4 c4 2 6 6 4 10 
-										l0 10 c2 4 0 8 -4 10 c-4 2 -8 0 -10 -4 
-										l0 -10 c-2 -4 0 -8 4 -10"/>
-									<path d="M0 14 l14 0"/>
-								</g>
-
-								<!-- Tiny hand-drawn sparkle -->
-								<path d="M58 72 l0 8 M54 76 l8 0"/>
-								<path d="M185 105 l0 6 M182 108 l6 0"/>
-							</g>
-						</svg>
+					<div class="edit__media" style="background:#E8F0FE; display:grid; place-items:center; padding: 24px;">
+						<img src="/assets/brain.png" alt="Brain illustration" style="width:100%; max-width:920px; height:auto; display:block; mix-blend-mode: multiply;" />
 					</div>
 				</div>
 			</div>
@@ -507,7 +436,7 @@
 	.home-hero { position: relative; overflow: hidden; }
 	.home-hero::before { content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0.5; background-image: radial-gradient(rgba(20, 19, 15, 0.05) 1px, transparent 1.4px); background-size: 22px 22px; -webkit-mask: radial-gradient(120% 90% at 80% 0%, #000, transparent 70%); mask: radial-gradient(120% 90% at 80% 0%, #000, transparent 70%); }
 	.home-hero .wrap { position: relative; z-index: 2; }
-	.home-hero__grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; padding: clamp(40px, 6vw, 78px) 0 clamp(48px, 6vw, 72px); }
+	.home-hero__grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; padding: clamp(56px, 8vw, 96px) 0 clamp(48px, 6vw, 72px); }
 	@media (min-width: 940px) { .home-hero__grid { grid-template-columns: 1.08fr 0.92fr; gap: 60px; } }
 	.hero-label { font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 18px; }
 	.home-hero h1 { font-size: clamp(42px, 6.2vw, 78px); line-height: 1; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 26px; }

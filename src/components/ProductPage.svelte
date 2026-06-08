@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { track } from '$lib/analytics';
-	import Disclaimer from '$components/Disclaimer.svelte';
 	import OlpChart from '$components/OlpChart.svelte';
 	import { WHYWORKS, INSIDE, INCLUDED, EXPERT, SHARED_FAQS, CONDITIONS } from '$lib/products';
 	import type { ProductCondition } from '$lib/products';
@@ -14,6 +13,17 @@
 	// "Buy now" goes to Shopify checkout. Placeholder per-product URL for now —
 	// swap this for the real Shopify checkout / variant permalink later.
 	let url = $derived(buyUrl ?? `https://copables.com/products/${c.handle}`);
+
+	// ── offer ticker lines (condition-aware) ────────────────
+	const TICKER = $derived([
+		`<b>${c.offerMid}</b>`,
+		`<b>${c.rating}</b> from ${c.reviewCount}`,
+		`<b>Clinician-reviewed</b> protocol`,
+		`<b>100% natural & vegan</b> gummies`,
+		`<b>Honest open-label</b> placebo`,
+		`<b>Free shipping</b> on every order`,
+		`<b>90-day money-back</b> guarantee`
+	]);
 
 	// ── shared pricing tiers (same across protocols) ──────────
 	const tiers = [
@@ -107,10 +117,15 @@
 		</filter>
 	</defs></svg>
 
-	<!-- offer strip -->
-	<div class="pdp-offer">
-		{c.offerMid} &nbsp;·&nbsp; <b>14-Day {c.name} Protocol</b> &nbsp;·&nbsp; backed by a
-		<b>90-day money-back guarantee</b>
+	<!-- offer ticker -->
+	<div class="pdp-ticker">
+		<div class="pdp-ticker__track">
+			{#each TICKER as line, i (i)}
+				<div class="pdp-ticker__item" style="--i:{i}">
+					{@html line}
+				</div>
+			{/each}
+		</div>
 	</div>
 
 	<main>
@@ -159,43 +174,6 @@
 
 					<div class="buy__divider"></div>
 
-					<div class="modetabs" role="tablist" aria-label="Purchase type">
-						<button class="modetab" class:active={mode === 'once'} role="tab" aria-selected={mode === 'once'} onclick={() => (mode = 'once')}>One-time</button>
-						<button class="modetab" class:active={mode === 'sub'} role="tab" aria-selected={mode === 'sub'} onclick={() => (mode = 'sub')}>Subscribe &amp; Save <span class="save">−15%</span></button>
-					</div>
-
-					<div class="tiers">
-						{#each tiers as t, i (t.qty)}
-							<button class="tier" class:active={tierIdx === i} onclick={() => (tierIdx = i)}>
-								{#if t.tag}<span class="tier__tag">{t.tag}</span>{/if}
-								<span class="tier__qty">{t.qty}</span>
-								<span class="tier__dur">{t.dur}</span>
-								<span class="tier__price">{money(mode === 'sub' ? t.sub : t.once)}</span>
-								<span class="tier__per">{t.per}</span>
-							</button>
-						{/each}
-					</div>
-
-					<div class="subrow">
-						<div class="subrow__l">
-							<button class="toggle" class:on={mode === 'sub'} aria-label="Toggle Subscribe & Save" aria-pressed={mode === 'sub'} onclick={() => (mode = mode === 'sub' ? 'once' : 'sub')}></button>
-							<div class="subrow__t"><b>Subscribe &amp; Save</b><small>Re-runs every cycle · pause or cancel any time</small></div>
-						</div>
-						<span class="subrow__save">Save 15%</span>
-					</div>
-
-					<div class="optrow">
-						<span class="optlabel">Gummy flavour</span>
-						<div class="selectbox">
-							<select aria-label="Gummy flavour">
-								<option>Wild Berry (best-seller)</option>
-								<option>Blood Orange</option>
-								<option>Elderflower &amp; Lemon</option>
-								<option>Unflavoured</option>
-							</select>
-						</div>
-					</div>
-
 					<ul class="included">
 						<li><span class="ck">✓</span> {INCLUDED[0]} <span class="pill">14-day supply</span></li>
 						{#each INCLUDED.slice(1) as item (item)}
@@ -203,47 +181,26 @@
 						{/each}
 					</ul>
 
-					<div class="gift">
-						<span class="gic">★</span>
-						<div><b>Free welcome kit with every subscription</b><small>Flare-up toolkit + the "Mind Over Medicine" guide — yours to keep.</small></div>
-					</div>
-
 					<div class="atc">
-						<a class="btn btn--ink atc-btn" href={url} onclick={() => buy('add_to_cart')}>
-							<span>Add to cart</span>
-							<span class="atc-price">
-								{#if mode === 'sub'}<span class="atc-was">{money(curTier.once)}</span>{/if}
-								<span>{money(curPrice)}</span>
-							</span>
+						<a class="btn btn--ink atc-btn" href={url} onclick={() => buy('preorder')}>
+							<span>Pre-order now</span>
+							<span class="atc-price"><span>$48</span></span>
 						</a>
+						<p class="preorder-note">You won't be charged until your order ships. Cancel any time before dispatch.</p>
 					</div>
 
 					<div class="trust3">
-						<div class="ti"><span class="g">♥</span><span>100% natural<br>&amp; vegan</span></div>
-						<div class="ti"><span class="g">⌕</span><span>Honest, open<br>label</span></div>
-						<div class="ti"><span class="g">↻</span><span>Pause or cancel<br>any time</span></div>
+						<div class="ti"><span class="g"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span>100% natural<br>&amp; vegan</span></div>
+						<div class="ti"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span><span>Honest, open<br>label</span></div>
+						<div class="ti"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span><span>Pause or cancel<br>any time</span></div>
 					</div>
 
 					<div class="ritualbar">
-						<span class="rb-ic">14</span>
+						<span class="rb-ic"><span class="rb-big">14</span><span class="rb-small">days</span></span>
 						<p><b>The ritual is the medicine.</b> Two gummies and a two-minute app check-in a day retrain the {c.cat.toLowerCase()} conversation. Consistency is the whole game.</p>
 					</div>
 
-					{#if pairCards[0]}
-						{@const s = pairCards[0]}
-						<div class="stackcard">
-							<p class="stackcard__lbl">Part of the {c.name} stack</p>
-							<div class="stackcard__row">
-								<span class="stackcard__thumb"><img src={s.bottle} alt={s.title} loading="lazy" /></span>
-								<div class="stackcard__info">
-									<b>+ {s.name} Protocol</b>
-									<small>{s.pairBlurb}</small>
-								</div>
-								<span class="stackcard__price">$40.80<s>$48</s></span>
-								<a class="stackcard__add" href="/shop/{s.handle}">Add</a>
-							</div>
-						</div>
-					{/if}
+
 				</div>
 			</div>
 		</section>
@@ -280,11 +237,11 @@
 		<!-- ===================== VALUE TRUST STRIP ===================== -->
 		<section class="vstrip">
 			<div class="wrap">
-				<span class="vitem"><span class="g">♥</span> 100% natural &amp; vegan</span>
-				<span class="vitem"><span class="g">⌕</span> Honest open-label</span>
-				<span class="vitem"><span class="g">✓</span> Independently reviewed</span>
-				<span class="vitem"><span class="g">↻</span> Cancel any time</span>
-				<span class="vitem"><span class="g">⛨</span> 90-day guarantee</span>
+					<span class="vitem"><span class="g"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span> 100% natural &amp; vegan</span>
+					<span class="vitem"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span> Honest open-label</span>
+					<span class="vitem"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="20 6 9 17 4 12"/></svg></span> Independently reviewed</span>
+					<span class="vitem"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span> Cancel any time</span>
+					<span class="vitem"><span class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> 90-day guarantee</span>
 			</div>
 		</section>
 
@@ -450,50 +407,55 @@
 			</div>
 		</section>
 
-		<!-- ===================== FINAL CTA ===================== -->
-		<section class="section band final-l">
+		<!-- ===================== 90-DAY GUARANTEE ===================== -->
+		<section class="section band guarantee">
 			<div class="wrap reveal">
-				<div class="face-badge"><img src="/assets/face.webp" alt="copables" /></div>
-				<h2 class="dhead dhead--xl">{c.finalH}</h2>
-				<p class="s-sub">{c.finalSub}</p>
-				<div class="hero-actions" style="justify-content:center;">
-					<a class="btn btn--ink btn--lg" href={url} onclick={() => buy('final_cta')}>Start your protocol <span class="arrow">→</span></a>
-					<a class="hero-ghost" href="/quiz/ibs">Not sure? Take the quiz <span aria-hidden="true">→</span></a>
+				<div class="guarantee__badge">
+					<span class="guarantee__num">90</span>
+					<span class="guarantee__lbl">DAY</span>
 				</div>
-				<div class="chips">
-					<span class="fchip"><i>✓</i> Free shipping</span>
-					<span class="fchip"><i>✓</i> 90-day guarantee</span>
-					<span class="fchip"><i>✓</i> Cancel any time</span>
+				<p class="guarantee__eyebrow">OUR PROMISE TO YOU</p>
+				<h2 class="dhead dhead--lg guarantee__head">Run the 14 days. If your {c.name.toLowerCase()} isn't calmer, it's free.</h2>
+				<p class="guarantee__body">We've helped over {c.reviewCount.split(' ')[0].replace(/,/g, '')} people live easier with {c.name} — but we know it won't work for everyone. So every protocol is backed by a full <strong>90-day money-back guarantee.</strong></p>
+				<blockquote class="guarantee__quote">"We built this for the people who've been told it's 'just in your head,' as if that makes it less real. It isn't. The {c.cat.toLowerCase()} link is real — and so is the relief."</blockquote>
+				<div class="guarantee__cred">— Theo Marsh, Co-founder of Copables</div>
+
+				<div class="guarantee__steps">
+					<div class="gstep">
+						<span class="gstep__num">1</span>
+						<div class="gstep__b">
+							<b>Finish the 14 days</b>
+							<p>Complete the protocol, ritual and all.</p>
+						</div>
+					</div>
+					<div class="gstep">
+						<span class="gstep__num">2</span>
+						<div class="gstep__b">
+							<b>Email us once</b>
+							<p>No forms, no return shipping, no hold music.</p>
+						</div>
+					</div>
+					<div class="gstep">
+						<span class="gstep__num">3</span>
+						<div class="gstep__b">
+							<b>Get a full refund</b>
+							<p>Every cent back, any time within 90 days.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="guarantee__cta">
+					<a class="btn btn--ink btn--lg" href={url} onclick={() => buy('guarantee_cta')}>Start your protocol <span class="arrow">→</span></a>
+					<a class="hero-ghost" href="/quiz/{c.handle}">Not sure? Take the quiz <span aria-hidden="true">→</span></a>
 				</div>
 			</div>
 		</section>
-
-		<!-- ===================== FOOTER ===================== -->
-		<footer class="home-foot">
-			<div class="wrap">
-				<div class="home-foot__grid">
-					<div class="home-foot__brand">
-						<img src="/assets/wordmark.webp" alt="copables" />
-						<p>Five evidence-based protocols for your own pharmacy. Where belief meets biology — mind over medicine.</p>
-						<div class="socials"><span>IG</span><span>X</span><span>TT</span></div>
-					</div>
-					<div class="fcol"><h4>Protocols</h4><ul><li><a href="/shop/low-mood">Low Mood</a></li><li><a href="/shop/ibs">IBS</a></li><li><a href="/shop/anxiety">Anxiety</a></li><li><a href="/shop/pms">PMS</a></li><li><a href="/shop/fatigue">Fatigue</a></li></ul></div>
-					<div class="fcol"><h4>Company</h4><ul><li><a href="/science">The Science</a></li><li><a href="/blog">Our Blog</a></li><li><a href="/">Home</a></li></ul></div>
-					<div class="fcol"><h4>Legal</h4><ul><li><a href="/terms">Terms</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/cookies">Cookies</a></li></ul></div>
-				</div>
-				<div class="home-foot__disc"><Disclaimer /></div>
-				<div class="home-foot__legal">
-					<p>© 2026 Copables Ltd. All rights reserved.</p>
-					<p>Mind over medicine.</p>
-				</div>
-			</div>
-		</footer>
 	</main>
 
 	<!-- mobile sticky add bar -->
 	<div class="pdp-sticky" class:show={showSticky}>
-		<div class="ps-name">{c.name} Protocol<small>{money(curPrice)} · {mode === 'sub' ? 'Subscribe & Save' : 'One-time'}</small></div>
-		<a class="btn btn--ink" href={url} onclick={() => buy('sticky_add')}>Add to cart</a>
+		<div class="ps-name">{c.name} Protocol<small>Pre-order · $48</small></div>
+		<a class="btn btn--ink" href={url} onclick={() => buy('sticky_preorder')}>Pre-order</a>
 	</div>
 </div>
 
@@ -506,10 +468,9 @@
 	.band { border-top: var(--section-divider); }
 	.band.paper2 { background: var(--paper-2); }
 
-	h1, h2, h3, h4 { margin: 0; }
+	:global(h1, h2, h3, h4) { margin: 0; }
 	.dhead { font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; }
 	.dhead--lg { font-size: clamp(28px, 3.6vw, 46px); }
-	.dhead--xl { font-size: clamp(34px, 5vw, 64px); }
 	.measure-h { max-width: 16ch; }
 
 	.snum { display: flex; align-items: center; gap: 16px; font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 22px; }
@@ -527,9 +488,21 @@
 	.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--c); padding-bottom: 2px; }
 	.link-arrow:hover { opacity: 0.75; }
 
-	/* ── offer strip ──────────────────────────────────────── */
-	.pdp-offer { background: var(--ink); color: var(--paper); text-align: center; font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; padding: 9px 16px; }
-	.pdp-offer b { color: var(--orange); font-weight: 800; }
+	/* ── offer ticker ───────────────────────────────────── */
+	.pdp-ticker { background: var(--ink); color: var(--paper); text-align: center; font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; height: 40px; overflow: hidden; position: relative; }
+	.pdp-ticker__track { animation: ticker 24s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+	.pdp-ticker__item { height: 40px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; padding: 0 16px; }
+	.pdp-ticker__item :global(b) { color: var(--orange); font-weight: 800; }
+	@keyframes ticker {
+		0%, 11.5%   { transform: translateY(0); }
+		14.3%, 25.8% { transform: translateY(-40px); }
+		28.6%, 40.1% { transform: translateY(-80px); }
+		42.9%, 54.4% { transform: translateY(-120px); }
+		57.1%, 68.6% { transform: translateY(-160px); }
+		71.4%, 82.9% { transform: translateY(-200px); }
+		85.7%, 97.2% { transform: translateY(-240px); }
+		100%         { transform: translateY(-280px); }
+	}
 
 	/* ── breadcrumb ───────────────────────────────────────── */
 	.crumbs { font-size: 13px; font-weight: 700; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 22px 0 4px; }
@@ -568,60 +541,26 @@
 	.buy__benefits .bic { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--blue-tint); color: var(--blue-deep); display: grid; place-items: center; font-weight: 900; font-size: 14px; margin-top: 1px; }
 	.buy__divider { height: 1px; background: var(--line); margin: 26px 0; }
 
-	.modetabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--paper-2); border-radius: 14px; padding: 5px; margin-bottom: 18px; }
-	.modetab { border: 0; background: transparent; font-family: var(--ff); cursor: pointer; border-radius: 10px; padding: 12px 10px; font-weight: 800; font-size: 14.5px; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
-	.modetab .save { font-size: 11px; font-weight: 800; background: var(--c); color: #fff; padding: 2px 8px; border-radius: 999px; }
-	.modetab.active { background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
-
-	.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-	.tier { position: relative; background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 16px 12px 14px; cursor: pointer; text-align: center; display: flex; flex-direction: column; transition: border-color 0.15s, background 0.15s, box-shadow 0.2s; font-family: var(--ff); }
-	.tier:hover { border-color: var(--ink-soft); }
-	.tier.active { border-color: var(--frame-ink); background: var(--paper); box-shadow: var(--frame-shadow-sm); }
-	.tier__tag { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: var(--c); padding: 4px 10px; border-radius: 999px; }
-	.tier.active .tier__tag { background: var(--frame-ink); }
-	.tier__qty { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-	.tier__dur { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); margin-top: 3px; }
-	.tier__price { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; margin-top: 12px; line-height: 1; }
-	.tier__per { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-top: 4px; }
-
-	.subrow { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; background: var(--blue-tint); border: 1px solid rgba(47, 149, 242, 0.28); border-radius: 14px; padding: 14px 16px; }
-	.subrow__l { display: flex; align-items: center; gap: 12px; }
-	.toggle { width: 46px; height: 27px; border-radius: 999px; background: #cdc4b2; border: 0; position: relative; cursor: pointer; flex: none; transition: background 0.18s; padding: 0; }
-	.toggle::after { content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); transition: transform 0.18s; }
-	.toggle.on { background: var(--blue); }
-	.toggle.on::after { transform: translateX(19px); }
-	.subrow__t b { font-size: 14.5px; font-weight: 800; display: block; }
-	.subrow__t small { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
-	.subrow__save { font-size: 12px; font-weight: 800; color: var(--blue-deep); white-space: nowrap; }
-
-	.optrow { margin-top: 16px; }
-	.optlabel { font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 7px; }
-	.selectbox { position: relative; }
-	.selectbox select { width: 100%; appearance: none; -webkit-appearance: none; font-family: var(--ff); font-size: 15.5px; font-weight: 700; color: var(--ink); background: #fff; border: 2px solid var(--line); border-radius: 13px; padding: 14px 44px 14px 16px; cursor: pointer; }
-	.selectbox::after { content: "▾"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ink-soft); font-size: 13px; }
-
 	.included { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
 	.included li { display: flex; gap: 10px; align-items: center; font-size: 14.5px; font-weight: 600; color: var(--ink-2); }
 	.included .ck { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--green-ok); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 900; }
 	.included li .pill { margin-left: auto; font-size: 11px; font-weight: 800; color: var(--blue-deep); background: var(--blue-tint); padding: 3px 9px; border-radius: 999px; }
 
-	.gift { display: flex; align-items: center; gap: 14px; margin-top: 18px; background: var(--orange-tint); border: 1px dashed var(--orange-deep); border-radius: 14px; padding: 14px 16px; }
-	.gift .gic { flex: none; width: 42px; height: 42px; border-radius: 11px; background: var(--orange); color: #1a1407; display: grid; place-items: center; font-size: 20px; font-weight: 900; }
-	.gift b { font-size: 14.5px; font-weight: 800; display: block; }
-	.gift small { font-size: 12.5px; color: var(--ink-soft); font-weight: 600; }
-
 	.atc { margin-top: 20px; }
 	.atc-btn { width: 100%; font-size: 18px; padding: 20px 28px; justify-content: space-between; }
 	.atc-price { display: inline-flex; align-items: center; gap: 10px; }
-	.atc-was { text-decoration: line-through; opacity: 0.55; font-weight: 700; font-size: 15px; }
+	.preorder-note { margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); font-weight: 600; text-align: center; }
 
 	.trust3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; text-align: center; }
 	.trust3 .ti { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 4px; }
-	.trust3 .ti .g { font-size: 22px; color: var(--ink); }
+	.trust3 .ti .g { color: var(--ink); flex: none; width: 28px; height: 28px; display: grid; place-items: center; }
+	.trust3 .ti .g svg { display: block; }
 	.trust3 .ti span { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); line-height: 1.25; }
 
 	.ritualbar { display: flex; align-items: center; gap: 14px; margin-top: 20px; background: #fff; border: var(--frame-bw) solid var(--frame-ink); border-radius: 14px; padding: 14px 16px; box-shadow: var(--frame-shadow-sm); }
-	.ritualbar .rb-ic { flex: none; width: 40px; height: 40px; border-radius: 11px; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-weight: 900; }
+	.ritualbar .rb-ic { flex: none; width: 44px; height: 44px; border-radius: 11px; background: var(--ink); color: var(--paper); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+	.rb-big { font-size: 15px; font-weight: 900; }
+	.rb-small { font-size: 8px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.9; margin-top: 1px; }
 	.ritualbar p { margin: 0; font-size: 13.5px; color: var(--ink-soft); font-weight: 600; line-height: 1.4; }
 	.ritualbar b { color: var(--ink); }
 
@@ -669,7 +608,8 @@
 	.vstrip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 	.vstrip .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(20px, 5vw, 64px); padding: 22px 24px; }
 	.vitem { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 800; color: var(--ink); }
-	.vitem .g { color: var(--c); flex: none; font-size: 18px; }
+	.vitem .g { color: var(--c); flex: none; width: 28px; height: 28px; display: grid; place-items: center; }
+	.vitem .g svg { display: block; }
 
 	/* ── science / charts (branded figure cards) ──────────── */
 	.sci { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
@@ -721,12 +661,7 @@
 	.incard__art { aspect-ratio: 5/3; position: relative; border-bottom: var(--frame-bw) solid var(--frame-ink); }
 	.incard__art .ill-wrap { position: absolute; inset: 0; display: grid; place-items: center; }
 	.incard__art .ill { width: 64px; height: 64px; }
-	.incard:nth-child(6n + 1) .incard__art { background: var(--blue-tint); color: var(--blue-deep); }
-	.incard:nth-child(6n + 2) .incard__art { background: var(--orange-tint); color: var(--orange-deep); }
-	.incard:nth-child(6n + 3) .incard__art { background: var(--c-tint); color: var(--c-deep); }
-	.incard:nth-child(6n + 4) .incard__art { background: #e3efe8; color: var(--green-ok); }
-	.incard:nth-child(6n + 5) .incard__art { background: var(--p-mood-bg); color: var(--p-mood-ink); }
-	.incard:nth-child(6n) .incard__art { background: var(--p-pms-bg); color: var(--p-pms-ink); }
+	.incard__art { background: var(--c-tint); color: var(--c-deep); }
 	.incard__b { padding: 14px 16px 16px; }
 	.incard__b h3 { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px; }
 	.incard__b p { margin: 0; font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
@@ -759,7 +694,7 @@
 	.rev-dist { display: grid; gap: 7px; max-width: 460px; }
 	.rev-dist .drow { display: grid; grid-template-columns: 42px 1fr 38px; align-items: center; gap: 12px; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); }
 	.rev-dist .dtrack { height: 9px; border-radius: 99px; background: var(--line); overflow: hidden; }
-	.rev-dist .dfill { height: 100%; background: var(--orange); border-radius: 99px; }
+	.rev-dist .dfill { display: block; height: 100%; background: var(--orange); border-radius: 99px; }
 	.rev-filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 16px 0; margin-bottom: 24px; }
 	.rev-filters .search { flex: 1 1 220px; min-width: 180px; }
 	.rev-filters input { width: 100%; font-family: var(--ff); font-size: 14px; font-weight: 600; border: 1.5px solid var(--line); border-radius: 999px; padding: 10px 16px; background: #fff; color: var(--ink); }
@@ -789,34 +724,33 @@
 	.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
 	.faq-a > div { padding: 0 20px 20px; font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
 
-	/* ── final CTA ────────────────────────────────────────── */
-	.final-l { text-align: center; background: var(--paper-2); }
-	.final-l .wrap { display: flex; flex-direction: column; align-items: center; }
-	.face-badge { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; border: var(--frame-bw) solid var(--frame-ink); background: #fff; margin-bottom: 22px; box-shadow: var(--frame-shadow-sm); }
-	.face-badge img { width: 100%; height: 100%; object-fit: cover; }
-	.s-sub { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-soft); line-height: 1.55; margin: 18px 0 28px; max-width: 46ch; }
-	.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+	/* ── 90-day guarantee ─────────────────────────────────── */
+	.guarantee { text-align: center; background: var(--paper-2); }
+	.guarantee .wrap { display: flex; flex-direction: column; align-items: center; }
+	.guarantee__badge {
+		width: 90px; height: 90px; border-radius: 50%;
+		border: 3px dashed var(--c);
+		background: var(--c-tint);
+		display: flex; flex-direction: column; align-items: center; justify-content: center;
+		margin-bottom: 28px;
+	}
+	.guarantee__num { font-size: 36px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--c-deep); }
+	.guarantee__lbl { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-deep); margin-top: 2px; }
+	.guarantee__eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c); margin: 0 0 18px; }
+	.guarantee__head { max-width: 22ch; margin-bottom: 20px; }
+	.guarantee__body { font-size: clamp(16px, 1.4vw, 18px); color: var(--ink-soft); line-height: 1.6; margin: 0 0 32px; max-width: 54ch; font-weight: 600; }
+	.guarantee__body strong { color: var(--ink); }
+	.guarantee__quote { margin: 0 0 14px; font-size: clamp(17px, 1.5vw, 21px); font-weight: 700; font-style: italic; line-height: 1.45; color: var(--ink); max-width: 52ch; }
+	.guarantee__cred { font-size: 14px; font-weight: 700; color: var(--ink-soft); margin-bottom: 40px; }
+	.guarantee__steps { display: grid; grid-template-columns: 1fr; gap: 14px; width: 100%; max-width: 800px; margin-bottom: 36px; }
+	@media (min-width: 680px) { .guarantee__steps { grid-template-columns: repeat(3, 1fr); } }
+	.gstep { background: var(--card); border: var(--frame-bw) solid var(--frame-ink); border-radius: var(--frame-radius); padding: 20px 22px; box-shadow: var(--frame-shadow-sm); display: flex; align-items: flex-start; gap: 14px; text-align: left; }
+	.gstep__num { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; font-size: 15px; font-weight: 800; }
+	.gstep__b b { font-size: 15px; font-weight: 800; display: block; margin-bottom: 4px; }
+	.gstep__b p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.45; font-weight: 600; }
+	.guarantee__cta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: center; }
 	.hero-ghost { font-weight: 800; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--c); padding-bottom: 2px; }
 	.hero-ghost:hover { opacity: 0.7; }
-	.chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
-	.fchip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); padding: 9px 16px; border-radius: 999px; }
-	.fchip i { color: var(--green-ok); font-style: normal; font-weight: 900; }
-
-	/* ── footer ───────────────────────────────────────────── */
-	.home-foot { background: var(--ink); color: rgba(251, 246, 234, 0.6); padding: clamp(56px, 8vw, 88px) 0 34px; border-top: var(--section-divider); }
-	.home-foot__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px 28px; padding-bottom: 48px; border-bottom: 1px solid rgba(251, 246, 234, 0.16); }
-	@media (max-width: 820px) { .home-foot__grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; } }
-	.home-foot__brand img { height: 24px; width: auto; filter: invert(1) brightness(1.7); }
-	.home-foot__brand p { margin: 18px 0 16px; font-size: 14px; line-height: 1.5; max-width: 320px; }
-	.socials { display: flex; gap: 10px; }
-	.socials span { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(251, 246, 234, 0.2); display: grid; place-items: center; font-size: 11px; font-weight: 800; color: rgba(251, 246, 234, 0.8); }
-	.fcol h4 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(251, 246, 234, 0.5); margin: 0 0 14px; }
-	.fcol ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-	.fcol a { font-size: 14.5px; font-weight: 600; color: rgba(251, 246, 234, 0.85); text-decoration: none; }
-	.fcol a:hover { color: #fff; }
-	.home-foot__disc { margin-top: 36px; color: rgba(251, 246, 234, 0.5); }
-	.home-foot__legal { padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; font-size: 12px; letter-spacing: 0.04em; color: rgba(251, 246, 234, 0.5); }
-	.home-foot__legal p { margin: 0; }
 
 	/* ── mobile sticky add bar ────────────────────────────── */
 	.pdp-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 75; display: flex; align-items: center; gap: 12px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(251, 246, 234, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(140%); transition: transform 0.3s ease; }
