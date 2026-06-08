@@ -85,11 +85,11 @@
 	];
 
 	const ctas = [
-		{ name: 'IBS Protocol', bg: '#422040', fg: '#FFE9F4' },
-		{ name: 'Depression Protocol', bg: '#55A8FA', fg: '#0A2747' },
-		{ name: 'PMS Protocol', bg: '#F2B5D4', fg: '#5A1D3A' },
-		{ name: 'Anxiety Protocol', bg: '#DE541E', fg: '#FFEDD9' },
-		{ name: 'Fatigue Protocol', bg: '#F0BE38', fg: '#4A2E00' }
+		{ name: 'IBS Protocol', bg: '#422040', fg: '#FFE9F4', ill: '<svg viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="100" cy="62" r="30"/><circle cx="100" cy="138" r="30"/><path d="M64 78 C 40 95, 40 120, 60 134"/><path d="M136 122 C 160 105, 160 80, 140 66"/><path d="M60 134 l 10 -2 m -10 2 l 2 -11"/><path d="M140 66 l -10 2 m 10 -2 l -2 11"/></g></svg>' },
+		{ name: 'Depression Protocol', bg: '#55A8FA', fg: '#0A2747', ill: '<svg viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path fill="currentColor" stroke="none" d="M62 140 A38 38 0 0 1 138 140 Z"/><line x1="26" y1="140" x2="174" y2="140"/><line x1="100" y1="92" x2="100" y2="72"/><line x1="66" y1="100" x2="52" y2="88"/><line x1="134" y1="100" x2="148" y2="88"/><line x1="80" y1="94" x2="70" y2="80"/><line x1="120" y1="94" x2="130" y2="80"/></g></svg>' },
+		{ name: 'PMS Protocol', bg: '#F2B5D4', fg: '#5A1D3A', ill: '<svg viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)"><circle fill="none" stroke="currentColor" stroke-width="3" cx="100" cy="100" r="60"/><path fill="currentColor" d="M104 64 a36 36 0 1 0 0 72 a26 36 0 1 1 0 -72 Z"/><circle fill="currentColor" cx="100" cy="30" r="6"/><circle fill="currentColor" cx="170" cy="100" r="6"/><circle fill="currentColor" cx="100" cy="170" r="6"/></g></svg>' },
+		{ name: 'Anxiety Protocol', bg: '#DE541E', fg: '#FFEDD9', ill: '<svg viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="100" cy="100" r="22"/><circle cx="100" cy="100" r="44"/><circle cx="100" cy="100" r="66"/><circle cx="100" cy="100" r="88"/></g><circle fill="currentColor" cx="100" cy="100" r="7"/></g></svg>' },
+		{ name: 'Fatigue Protocol', bg: '#F0BE38', fg: '#4A2E00', ill: '<svg viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M20 118 C 50 70, 78 70, 100 104 S 150 150, 180 96"/><g fill="currentColor"><circle cx="48" cy="86" r="6"/><circle cx="100" cy="104" r="6"/><circle cx="156" cy="118" r="6"/></g></g></svg>' }
 	];
 </script>
 
@@ -115,6 +115,16 @@
 		</div>
 	</section>
 {/snippet}
+
+<!-- chalk roughen filter -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+	<defs>
+		<filter id="chalk" x="-20%" y="-20%" width="140%" height="140%">
+			<feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
+			<feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G" />
+		</filter>
+	</defs>
+</svg>
 
 <div class="sci">
 
@@ -299,6 +309,7 @@
 				{#each ctas as c (c.name)}
 					<a class="sci-cta__card" href="/quiz/ibs" style="background:{c.bg}; color:{c.fg}">
 						<div class="sci-cta__name">{c.name}</div>
+						<div class="sci-cta__ill">{@html c.ill}</div>
 						<div class="sci-cta__btn">Take Assessment →</div>
 					</a>
 				{/each}
@@ -456,8 +467,10 @@
 	.sci-cta__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 18px; }
 	.sci-cta__card { padding: 20px 18px 16px; border-radius: 12px; border: 2px solid #000; text-decoration: none; display: flex; flex-direction: column; gap: 14px; min-height: 150px; }
 	.sci-cta__card:hover { opacity: 0.92; }
-	.sci-cta__name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; flex: 1; }
-	.sci-cta__btn { background: rgba(255, 255, 255, 0.85); color: #000; padding: 8px 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 6px; text-align: center; }
+	.sci-cta__name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+	.sci-cta__ill { flex: 1 1 auto; display: grid; place-items: center; padding: 14px 0; min-height: 90px; opacity: 0.9; }
+	.sci-cta__ill :global(svg) { width: 100%; max-width: 120px; height: auto; display: block; }
+	.sci-cta__btn { background: rgba(255, 255, 255, 0.85); color: #000; padding: 8px 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 6px; text-align: center; margin-top: auto; }
 
 	/* ── Who this isn't for ───────────────────────────────── */
 	.sci-who { background: #EDE5D2; border-bottom: 3px solid #000; padding: 120px 48px; }

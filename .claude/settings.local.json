@@ -34,7 +34,11 @@
       "Bash(command -v pngquant)",
       "Bash(pngquant --quality=70-90 --strip --force --ext .png ibs-bottle.png)",
       "Bash(command -v sips)",
-      "Bash(sips --resampleWidth 640 ibs-bottle.png)"
+      "Bash(sips --resampleWidth 640 ibs-bottle.png)",
+      "Bash(tar xzf *)",
+      "Bash(perl -pi -e 's{const buyUrl = data\\\\.products}{let buyUrl = $derived\\(data.products}; s{onlineStoreUrl \\\\?\\\\? '\\\\''/quiz/ibs'\\\\'';}{onlineStoreUrl ?? '\\\\''/quiz/ibs'\\\\''\\);}' src/routes/shop/__TRACKED_VAR__/+page.svelte)",
+      "Bash(perl -pi -e 's/= \\\\\\(data\\\\.products/= \\\\$derived\\(data.products/' src/routes/shop/__TRACKED_VAR__/+page.svelte)",
+      "Bash(npx svelte-check *)"
     ]
   }
 }

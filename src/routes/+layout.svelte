@@ -12,7 +12,10 @@
 	let isHidden = $derived(hiddenPrefixes.some((p) => page.url.pathname.startsWith(p)));
 	let isScience = $derived(page.url.pathname.startsWith('/science'));
 	let isBlog = $derived(page.url.pathname.startsWith('/blog'));
-	let isOwnChrome = $derived(isHidden || isScience || isBlog);
+	let isHome = $derived(page.url.pathname === '/');
+	// individual product pages (PDPs) render their own full-bleed chrome
+	let isProduct = $derived(/^\/shop\/(ibs|anxiety|pms|fatigue|low-mood)\/?$/.test(page.url.pathname));
+	let isOwnChrome = $derived(isHidden || isScience || isBlog || isHome || isProduct);
 
 	let activeNav = $derived(
 		isScience ? 'science' :
