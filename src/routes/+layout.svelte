@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { track } from '$lib/analytics';
 	import NavBar from '$components/NavBar.svelte';
+	import Footer from '$components/Footer.svelte';
 
 	let { children } = $props();
 
@@ -13,6 +14,7 @@
 	let isScience = $derived(page.url.pathname.startsWith('/science'));
 	let isBlog = $derived(page.url.pathname.startsWith('/blog'));
 	let isHome = $derived(page.url.pathname === '/');
+	let isQuiz = $derived(page.url.pathname.startsWith('/quiz'));
 	// individual product pages (PDPs) render their own full-bleed chrome
 	let isProduct = $derived(/^\/shop\/(ibs|anxiety|pms|fatigue|low-mood)\/?$/.test(page.url.pathname));
 	let isOwnChrome = $derived(isHidden || isScience || isBlog || isHome || isProduct);
@@ -60,6 +62,10 @@
 <main class:bare={isOwnChrome}>
 	{@render children()}
 </main>
+
+{#if !isQuiz}
+	<Footer />
+{/if}
 
 <style>
 	:global(body.has-nav) {

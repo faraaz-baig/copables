@@ -325,43 +325,6 @@
 		</div>
 	</section>
 
-	<!-- ── Footer ───────────────────────────────────────────── -->
-	<footer class="sci-foot">
-		<div class="sci-inner">
-			<div class="sci-foot__grid">
-				<div>
-					<img class="sci-foot__logo" src="/assets/wordmark.png" alt="copables" />
-					<p class="sci-foot__blurb">Where belief meets behavior. 14 days to a brighter, healthier you. Mind over medicine.</p>
-				</div>
-				<div>
-					<div class="sci-foot__h">Protocols</div>
-					<div class="sci-foot__link"><a href="/shop/low-mood">Low Mood</a></div>
-					<div class="sci-foot__link"><a href="/shop/ibs">IBS</a></div>
-					<div class="sci-foot__link"><a href="/shop/anxiety">Anxiety</a></div>
-					<div class="sci-foot__link"><a href="/shop/pms">PMS</a></div>
-					<div class="sci-foot__link"><a href="/shop/fatigue">Fatigue</a></div>
-				</div>
-				<div>
-					<div class="sci-foot__h">Company</div>
-					<div class="sci-foot__link"><a href="https://www.copables.com/protocol" target="_blank" rel="noopener noreferrer">How It Works</a></div>
-					<div class="sci-foot__link"><a href="/science">The Science</a></div>
-					<div class="sci-foot__link"><a href="/blog">Our Blog</a></div>
-					<div class="sci-foot__link"><a href="/">Home</a></div>
-				</div>
-				<div>
-					<div class="sci-foot__h">Legal</div>
-					<div class="sci-foot__link"><a href="https://www.copables.com/terms" target="_blank" rel="noopener noreferrer">Terms</a></div>
-					<div class="sci-foot__link"><a href="https://www.copables.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a></div>
-					<div class="sci-foot__link"><a href="https://www.copables.com/eula" target="_blank" rel="noopener noreferrer">Cookies</a></div>
-				</div>
-			</div>
-			<div class="sci-foot__bottom">
-				<span>© 2026 Copables Ltd. All rights reserved.</span>
-				<span>Mind over medicine.</span>
-			</div>
-		</div>
-	</footer>
-
 </div>
 
 <style>
@@ -476,19 +439,9 @@
 	.sci-who { background: #EDE5D2; border-bottom: 3px solid #000; padding: 120px 48px; }
 	.sci-who__grid { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; }
 	.sci-who__label { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #000; }
-	.sci-who__p { font-size: 16px; font-weight: 300; line-height: 1.65; color: #1B1C1C; margin: 0; max-width: 760px; }
+	.sci-who__p { font-size: 16px; font-weight: 300; line-height: 1.65; color: #1B1C1C; margin: 0; }
 
 	/* ── Footer ───────────────────────────────────────────── */
-	.sci-foot { padding: 80px 48px 40px; background: #000; color: #fff; }
-	.sci-foot__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-	.sci-foot__logo { height: 26px; width: auto; filter: invert(1) brightness(1.7); }
-	.sci-foot__blurb { margin-top: 20px; font-size: 16px; line-height: 1.5; font-weight: 300; max-width: 320px; color: rgba(255, 255, 255, 0.72); }
-	.sci-foot__h { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.5); margin-bottom: 16px; }
-	.sci-foot__link { margin-top: 10px; }
-	.sci-foot__link a { font-size: 15px; font-weight: 500; color: #fff; text-decoration: none; }
-	.sci-foot__link a:hover { opacity: 0.78; }
-	.sci-foot__bottom { padding-top: 28px; display: flex; justify-content: space-between; gap: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5); letter-spacing: 0.04em; }
-
 	/* ── Peer-reviewed studies (sticky left / scrollable right) ─ */
 	.sci-studies { background: #fff; padding-top: 0; padding-bottom: 0; }
 	.sci-studies__grid {
@@ -624,9 +577,6 @@
 		.sci-studies__list { padding-top: 0; padding-bottom: 80px; }
 		.sci-who { padding: 80px 32px; }
 		.sci-who__grid { grid-template-columns: 1fr; gap: 16px; }
-		.sci-foot { padding: 64px 32px 32px; }
-		.sci-foot__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-		.sci-foot__bottom { flex-direction: column; gap: 8px; }
 	}
 	@media (max-width: 640px) {
 		.sci-sec { padding: 64px 24px; }
@@ -639,10 +589,9 @@
 		.sci-studies__col { padding-top: 64px; padding-bottom: 24px; }
 		.sci-studies__list { padding-top: 0; padding-bottom: 64px; }
 		.sci-who { padding: 64px 24px; }
-		.sci-foot { padding: 56px 24px 28px; }
 	}
 	@media (max-width: 540px) {
-		.sci-cond__grid, .sci-cta__grid, .sci-logos__list, .sci-foot__grid { grid-template-columns: 1fr; }
+		.sci-cond__grid, .sci-cta__grid, .sci-logos__list { grid-template-columns: 1fr; }
 		.sci-hero__img { min-height: 240px; }
 		.sci-hero__img img { max-width: 55%; max-height: 55%; padding: 16px; }
 		.sci-hero__text { padding: 36px 20px; }
@@ -655,6 +604,5 @@
 		.sci-studies__list { padding-top: 0; padding-bottom: 56px; }
 		.sci-studies__h2 { font-size: clamp(36px, 9vw, 48px); }
 		.sci-who { padding: 56px 20px; }
-		.sci-foot { padding: 48px 20px 28px; }
 	}
 </style>

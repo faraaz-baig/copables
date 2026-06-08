@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { track } from '$lib/analytics';
 	import OlpChart from '$components/OlpChart.svelte';
-	import Disclaimer from '$components/Disclaimer.svelte';
 
 	function trackCTA(label: string) {
 		track('cta_click', { label, page: 'home' });
@@ -62,7 +61,7 @@
 			<div class="home-hero__grid">
 				<div class="reveal">
 					<div class="wavebar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-					<span class="hero-pill"><span class="dt"></span> Open-label placebos · Mind over medicine</span>
+					<p class="hero-label">Open-label placebos</p>
 					<h1>Placebos can help even when <span class="squig">you know<svg viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M3 8 C 40 2, 70 12, 100 6 S 165 2, 197 7" filter="url(#chalk)" /></svg></span>.</h1>
 					<p class="lead">Five evidence-based protocols that harness your brain's own pharmacy to improve your condition.</p>
 					<div class="hero-actions">
@@ -78,7 +77,7 @@
 			</div>
 
 			<div class="insts reveal">
-				<p class="insts__lbl">Endorsed using research from the world's leading institutions</p>
+				<p class="insts__lbl">Designed using research from the world's leading institutions</p>
 				<div class="insts__row">
 					<img class="inst-logo" src="/assets/science/logo-harvard.webp" alt="Harvard Medical School" loading="lazy" decoding="async" />
 					<img class="inst-logo" src="/assets/science/logo-columbia.webp" alt="Columbia University" loading="lazy" decoding="async" />
@@ -103,12 +102,19 @@
 				<div class="prob-grid">
 					<div class="qcard tint-grey reveal">
 						<div class="qcard__art">
-							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<circle cx="100" cy="85" r="45"/>
-								<path d="M100 130 v35"/>
-								<path d="M85 160 h30"/>
-								<rect x="82" y="82" width="36" height="20" rx="10" transform="rotate(-35 100 92)"/>
-								<line x1="100" y1="82" x2="100" y2="102" transform="rotate(-35 100 92)"/>
+							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+								<!-- Hand-drawn pill bottle with circular arrow -->
+								<path d="M85 60 c3 -2 8 -2 12 0 c4 2 6 5 6 10 
+									l0 45 c0 5 -3 10 -8 12 c-5 2 -10 2 -15 0 
+									c-5 -2 -8 -7 -8 -12 l0 -45 
+									c0 -5 3 -8 8 -10"/>
+								<!-- Cap -->
+								<path d="M82 56 l0 -6 c0 -3 3 -5 8 -5 
+									l10 0 c5 0 8 2 8 5 l0 6"/>
+								<!-- Circular arrow around it -->
+								<path d="M130 85 c5 15 -5 35 -25 42 
+									c-20 7 -40 -5 -45 -25"/>
+								<path d="M62 95 l-8 5 l5 8"/>
 							</g></svg>
 						</div>
 						<h3>Treated, not resolved.</h3>
@@ -117,11 +123,21 @@
 
 					<div class="qcard tint-blue reveal">
 						<div class="qcard__art">
-							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<circle cx="72" cy="100" r="24"/>
-								<path d="M38 80 l16 10 M36 100 l18 0 M38 120 l16 -10 M48 68 l12 14"/>
-								<line x1="96" y1="100" x2="156" y2="100"/>
-								<path d="M156 100 l-14 -8 M156 100 l-14 8"/>
+							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+								<!-- Hand-drawn neuron cell body -->
+								<path d="M75 95 c-3 -8 2 -16 10 -18 
+									c8 -2 16 3 18 10 
+									c2 8 -3 16 -10 18 
+									c-8 2 -16 -2 -18 -10"/>
+								<!-- Dendrites -->
+								<path d="M58 82 c-4 -2 -8 -6 -10 -12"/>
+								<path d="M55 95 c-6 0 -12 2 -16 6"/>
+								<path d="M58 108 c-4 4 -6 10 -6 16"/>
+								<path d="M68 78 c-2 -6 -2 -12 2 -18"/>
+								<!-- Axon with arrow -->
+								<path d="M92 95 c8 0 16 2 24 6 
+									c8 4 16 8 24 10"/>
+								<path d="M134 105 l10 -6 l-2 10"/>
 							</g></svg>
 						</div>
 						<h3>Neural, not chemical.</h3>
@@ -130,9 +146,22 @@
 
 					<div class="qcard tint-rose reveal">
 						<div class="qcard__art">
-							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M70 155 L70 122 C 55 114, 50 88, 66 73 C 84 57, 118 57, 136 75 C 150 89, 147 111, 132 121 L 132 155"/>
-								<path d="M100 90 l6 18 l18 5 l-18 5 l-6 18 l-6 -18 l-18 -5 l18 -5 Z"/>
+							<svg class="ill" viewBox="0 0 200 200" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+								<!-- Hand-drawn brain -->
+								<path d="M70 155 L70 120 
+									c-3 -5 -5 -12 -2 -20 
+									c3 -10 12 -18 24 -22 
+									c12 -4 26 -2 36 8 
+									c10 8 12 20 8 30 
+									c-2 8 -8 14 -16 18 
+									L 130 155"/>
+								<!-- Fold lines -->
+								<path d="M85 105 c4 6 6 14 4 22"/>
+								<path d="M115 100 c-4 6 -6 14 -4 22"/>
+								<!-- Sparkle/star -->
+								<path d="M100 80 l4 10 l10 2 l-8 6 l2 10 
+									l-8 -6 l-8 6 l2 -10 
+									l-8 -6 l10 -2 Z"/>
 							</g></svg>
 						</div>
 						<h3>A different substrate.</h3>
@@ -152,26 +181,77 @@
 						<p>Studies have shown that non-deceptive placebos can cause your brain to produce the very same symptom-relieving chemicals present in real pharmacology.</p>
 						<a class="btn btn--primary" href="/science" onclick={() => trackCTA('science_evidence')}>See the Science <span class="arrow">→</span></a>
 					</div>
-					<div class="edit__media" style="background:#FBF6EA; display:grid; place-items:center;">
-						<svg viewBox="0 0 240 240" class="science-chalk" aria-hidden="true" style="width:80%; height:auto;">
-							<g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<!-- Minimal brain outline -->
-								<path d="M120 35 C 95 35, 75 50, 70 72 C 55 68, 42 78, 38 98 C 22 105, 18 125, 28 142 C 24 158, 38 175, 55 180 C 65 195, 88 202, 110 198 C 120 205, 135 205, 145 198 C 168 202, 190 195, 200 180 C 218 175, 230 158, 226 142 C 236 125, 230 105, 214 98 C 210 78, 196 68, 180 72 C 175 50, 155 35, 130 35 Z"/>
-								<!-- Simple fold lines -->
-								<path d="M85 85 Q 100 95, 105 115"/>
-								<path d="M155 85 Q 140 95, 135 115"/>
-								<path d="M120 95 L 120 165"/>
-								<!-- Keyhole -->
-								<circle cx="120" cy="135" r="10"/>
-								<path d="M120 142 L 120 158 L 114 158 L 114 148 L 114 142 Z" fill="#8A2433" stroke="none"/>
-								<!-- Floating capsule -->
-								<g transform="translate(175, 65) rotate(30)">
-									<rect x="0" y="0" width="14" height="26" rx="7"/>
-									<line x1="0" y1="13" x2="14" y2="13"/>
+					<div class="edit__media" style="background:#E8F0FE; display:grid; place-items:center;">
+						<svg viewBox="0 0 240 240" class="science-chalk" aria-hidden="true" style="width:85%; height:auto;">
+							<g filter="url(#chalk)" fill="none" stroke="#1A3A6B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+								<!-- Hand-drawn brain — organic, lumpy outline -->
+								<path d="M120 44 
+									c-8 -2 -16 0 -22 6 
+									c-6 -3 -14 -2 -20 4 
+									c-6 2 -10 8 -8 16 
+									c-4 6 -6 14 -2 22 
+									c-2 8 2 16 8 22 
+									c2 8 8 14 16 18 
+									c6 6 14 10 24 10 
+									c8 2 16 0 24 -4 
+									c8 2 16 -2 22 -8 
+									c6 -4 10 -10 10 -18 
+									c4 -6 6 -14 4 -22 
+									c2 -8 -2 -16 -8 -22 
+									c-2 -8 -8 -14 -16 -18 
+									c-6 -6 -14 -10 -24 -10 
+									c-6 -2 -12 -2 -18 0 
+									c-6 -4 -12 -4 -18 -2 
+									c-6 2 -10 6 -12 12 
+									c-4 4 -6 10 -4 16 
+									c-2 6 0 12 4 18 
+									c2 6 6 12 12 16 
+									c4 4 10 8 16 10 
+									c6 2 12 2 18 0 
+									c6 2 12 2 18 -2 
+									c6 -2 10 -6 12 -12 
+									c4 -4 6 -10 4 -16 
+									c2 -6 0 -12 -4 -18 
+									c-2 -6 -6 -12 -12 -16 
+									c-4 -4 -10 -8 -16 -10 
+									c-6 -2 -12 -2 -18 0 
+									c-6 -2 -12 -2 -18 2 
+									c-6 2 -10 6 -12 12 
+									c-4 4 -6 10 -4 16"/>
+
+								<!-- Squiggly fold lines -->
+								<path d="M88 82 c4 2 8 6 10 12 c2 6 2 12 0 18"/>
+								<path d="M152 82 c-4 2 -8 6 -10 12 c-2 6 -2 12 0 18"/>
+								<path d="M120 90 c2 4 2 10 0 18 c-2 8 -2 16 0 24"/>
+
+								<!-- Hand-drawn keyhole -->
+								<path d="M120 128 c4 -2 8 0 10 4 c2 4 0 8 -4 10 
+									l0 14 l-4 0 l0 -8 l-4 0 l0 8 l-4 0 l0 -14 
+									c-4 -2 -6 -6 -4 -10 c2 -4 6 -6 10 -4"/>
+
+								<!-- Hand-drawn key going in -->
+								<path d="M120 108 
+									c3 -2 7 -2 10 0 
+									c3 2 5 6 4 10 
+									c-1 4 -4 7 -8 8 
+									l0 6 l-3 0 l0 -4 l-3 0 l0 4 l-3 0 l0 -6 
+									c-4 -1 -7 -4 -8 -8 
+									c-1 -4 1 -8 4 -10 
+									c3 -2 7 -2 10 0"/>
+								<!-- Key ring -->
+								<path d="M116 104 c-2 -4 0 -8 4 -10 c4 -2 8 0 10 4"/>
+
+								<!-- Small floating capsule (hand-drawn) -->
+								<g transform="translate(175, 55) rotate(25)">
+									<path d="M0 6 c2 -4 6 -6 10 -4 c4 2 6 6 4 10 
+										l0 10 c2 4 0 8 -4 10 c-4 2 -8 0 -10 -4 
+										l0 -10 c-2 -4 0 -8 4 -10"/>
+									<path d="M0 14 l14 0"/>
 								</g>
-								<!-- Small round pill -->
-								<circle cx="55" cy="75" r="7"/>
-								<line x1="55" y1="70" x2="55" y2="80"/>
+
+								<!-- Tiny hand-drawn sparkle -->
+								<path d="M58 72 l0 8 M54 76 l8 0"/>
+								<path d="M185 105 l0 6 M182 108 l6 0"/>
 							</g>
 						</svg>
 					</div>
@@ -212,56 +292,57 @@
 				<div class="steps-row reveal">
 					<div class="stepc">
 						<div class="step-ill">
-							<svg viewBox="0 0 120 120" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="28" y="42" width="64" height="48" rx="8"/>
-								<path d="M28 54 h64"/>
-								<path d="M52 42 v-10 c0 -5, 4 -8, 8 -8 s8 3, 8 8 v10"/>
-								<rect x="44" y="66" width="32" height="6" rx="3"/>
-								<circle cx="46" cy="86" r="5"/>
-								<circle cx="62" cy="86" r="5"/>
-								<circle cx="78" cy="86" r="5"/>
-							</g></svg>
+							<svg viewBox="0 0 120 120" aria-hidden="true">
+								<rect x="18" y="18" width="84" height="84" rx="24" fill="#DCE7F6"/>
+								<g fill="none" stroke="#25548F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="48" y="30" width="24" height="48" rx="12"/>
+									<line x1="48" y1="54" x2="72" y2="54"/>
+								</g>
+							</svg>
 						</div>
 						<h3>Receive your kit</h3><p>Capsules, ritual cards and a welcome guide, shipped to your door.</p>
 					</div>
 					<div class="stepc">
 						<div class="step-ill">
-							<svg viewBox="0 0 120 120" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="#25548F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="42" y="28" width="36" height="56" rx="10"/>
-								<rect x="48" y="22" width="24" height="10" rx="5"/>
-								<line x1="60" y1="38" x2="60" y2="50"/>
-								<circle cx="60" cy="64" r="12"/>
-								<path d="M54 64 l4 4 l8 -8"/>
-								<rect x="50" y="82" width="20" height="6" rx="3"/>
-							</g></svg>
+							<svg viewBox="0 0 120 120" aria-hidden="true">
+								<rect x="18" y="18" width="84" height="84" rx="24" fill="#FBE8CE"/>
+								<g fill="none" stroke="#D9760A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="38" y="32" width="44" height="56" rx="8"/>
+									<line x1="46" y1="48" x2="74" y2="48"/>
+									<line x1="46" y1="58" x2="66" y2="58"/>
+								</g>
+							</svg>
 						</div>
 						<h3>Begin the ritual</h3><p>Take your capsules and follow the day's card prompt — ten minutes a day.</p>
 					</div>
 					<div class="stepc">
 						<div class="step-ill">
-							<svg viewBox="0 0 120 120" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="#D9760A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="38" y="18" width="44" height="72" rx="10"/>
-								<circle cx="60" cy="78" r="5"/>
-								<rect x="46" y="32" width="28" height="22" rx="4"/>
-								<path d="M52 42 l4 4 l8 -8"/>
-								<path d="M32 54 l-8 8 M32 54 l8 8"/>
-								<circle cx="26" cy="58" r="4"/>
-							</g></svg>
+							<svg viewBox="0 0 120 120" aria-hidden="true">
+								<rect x="18" y="18" width="84" height="84" rx="24" fill="#F0D9DD"/>
+								<g fill="none" stroke="#8A2433" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="46" y="28" width="28" height="48" rx="8"/>
+									<line x1="50" y1="40" x2="70" y2="40"/>
+									<circle cx="60" cy="66" r="3"/>
+									<path d="M34 44 l0 -8 l8 0"/>
+									<path d="M34 60 l0 8 l8 0"/>
+									<path d="M86 44 l0 -8 l-8 0"/>
+									<path d="M86 60 l0 8 l-8 0"/>
+								</g>
+							</svg>
 						</div>
 						<h3>Scan for coaching</h3><p>Scan each card with the app for personalised CBT exercises.</p>
 					</div>
 					<div class="stepc">
 						<div class="step-ill">
-							<svg viewBox="0 0 120 120" aria-hidden="true"><g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="20" y="28" width="80" height="64" rx="8"/>
-								<line x1="20" y1="44" x2="100" y2="44"/>
-								<line x1="32" y1="84" x2="32" y2="56"/>
-								<rect x="40" y="60" width="12" height="24" rx="2"/>
-								<rect x="56" y="52" width="12" height="32" rx="2"/>
-								<rect x="72" y="40" width="12" height="44" rx="2"/>
-								<path d="M36 56 l8 -6 l8 4 l8 -10 l8 6"/>
-								<circle cx="76" cy="34" r="4"/>
-							</g></svg>
+							<svg viewBox="0 0 120 120" aria-hidden="true">
+								<rect x="18" y="18" width="84" height="84" rx="24" fill="#D6F5E3"/>
+								<g fill="none" stroke="#2E9E6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="36" y="34" width="48" height="52" rx="8"/>
+									<line x1="36" y1="50" x2="84" y2="50"/>
+									<path d="M48 46 l0 -6 c0 -2 2 -4 4 -4 l8 0 c2 0 4 2 4 4 l0 6"/>
+									<path d="M44 72 l8 -8 l8 4 l12 -10"/>
+								</g>
+							</svg>
 						</div>
 						<h3>Track outcomes</h3><p>Validated symptom tracking shows what changes, week over week.</p>
 					</div>
@@ -276,55 +357,6 @@
 					<p class="snum"><span class="n">05</span> The promise <span class="rule"></span></p>
 					<h2>No meds. <span class="w-o">No huge costs.</span> <span class="w-b">No doctor's office.</span></h2>
 					<p class="s-sub">A clinically-grounded protocol you run from home in fourteen days — built on the same neurochemistry your prescriptions rely on.</p>
-				</div>
-				<div class="promise-media reveal" aria-hidden="true">
-					<svg viewBox="0 0 320 280" class="promise-chalk">
-						<!-- Pill bottle (top-left, crossed out) — blue tinted circle -->
-						<g transform="translate(18, 18)">
-							<circle cx="26" cy="42" r="38" fill="#DCE7F6" stroke="#8A2433" stroke-width="2"/>
-							<g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="10" y="22" width="32" height="48" rx="5"/>
-								<rect x="12" y="10" width="28" height="14" rx="3"/>
-								<path d="M4 16 L48 76 M48 16 L4 76" stroke-width="3"/>
-							</g>
-						</g>
-
-						<!-- Hospital / doctor (top-right, crossed out) — green tinted circle -->
-						<g transform="translate(232, 18)">
-							<circle cx="26" cy="42" r="38" fill="#D6F5E3" stroke="#8A2433" stroke-width="2"/>
-							<g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="5" y="26" width="42" height="48" rx="4"/>
-								<path d="M20 14 v12 h-6 v6 h6 v6 h6 v-6 h6 v-6 h-6 v-12 Z"/>
-								<path d="M0 20 L52 80 M52 20 L0 80" stroke-width="3"/>
-							</g>
-						</g>
-
-						<!-- Money / coins (bottom-left, crossed out) — orange tinted circle -->
-						<g transform="translate(18, 178)">
-							<circle cx="20" cy="30" r="38" fill="#FBE8CE" stroke="#8A2433" stroke-width="2"/>
-							<g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<ellipse cx="20" cy="36" rx="18" ry="7"/>
-								<ellipse cx="20" cy="28" rx="18" ry="7"/>
-								<ellipse cx="20" cy="20" rx="18" ry="7"/>
-								<path d="M0 6 L40 50 M40 6 L0 50" stroke-width="3"/>
-							</g>
-						</g>
-
-						<!-- Home with heart (center, emphasized) — larger cream circle with blue rim -->
-						<g transform="translate(100, 90)">
-							<circle cx="55" cy="60" r="54" fill="#FBF6EA" stroke="#25548F" stroke-width="2.5"/>
-							<g filter="url(#chalk)" fill="none" stroke="#8A2433" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="10" y="35" width="90" height="65" rx="5"/>
-								<path d="M5 35 L55 8 L105 35"/>
-								<rect x="75" y="12" width="12" height="18" rx="2"/>
-								<rect x="40" y="65" width="22" height="35" rx="3"/>
-								<rect x="18" y="55" width="16" height="16" rx="2"/>
-								<line x1="26" y1="55" x2="26" y2="71"/>
-								<line x1="18" y1="63" x2="34" y2="63"/>
-								<path d="M55 48 C55 43 50 39 46 39 C42 39 39 43 39 48 C39 55 55 64 55 64 C55 64 71 55 71 48 C71 43 68 39 64 39 C60 39 55 43 55 48 Z"/>
-							</g>
-						</g>
-					</svg>
 				</div>
 			</div>
 		</section>
@@ -347,31 +379,49 @@
 		<!-- ===================== REVIEWS ===================== -->
 		<section class="section band reviews-section">
 			<div class="wrap">
-				<p class="snum reveal"><span class="n">℞</span> What members say <span class="rule"></span></p>
-				<h2 class="dhead dhead--lg measure-h reveal">"I genuinely rolled my eyes ordering this. I'm on day 19 and my flare-ups have gone from daily to maybe twice."</h2>
+				<div class="reviews-header reveal">
+					<p class="snum"><span class="n">06</span> What members say <span class="rule"></span></p>
+					<div class="reviews-hero">
+						<div class="reviews-quote-icon" aria-hidden="true">"</div>
+						<h2 class="reviews-headline">I noticed a real<br/>difference in just the<br/>first week.</h2>
+						<div class="reviews-rating">
+							<span class="reviews-rating__stars">★★★★★</span>
+							<span class="reviews-rating__text">4.9 average from <b>340+</b> members</span>
+						</div>
+					</div>
+				</div>
 				<div class="reviews-grid">
 					<div class="review-card reveal">
-						<div class="review-card__stars">★★★★★</div>
-						<p class="review-card__body">"Three years, four gastros, every diet on the internet. I genuinely rolled my eyes ordering this. I'm on day 19 and my flare-ups have gone from daily to maybe twice. I don't fully understand it and I don't care."</p>
-						<div class="review-card__meta">
-							<span class="review-card__init" style="background:#F0D9DD; color:#7E2230">MK</span>
-							<div><b>Maya K.</b><span>IBS Protocol</span></div>
+						<div class="review-card__author">
+							<span class="review-card__avatar" style="background:#7E2230; color:#fff">S</span>
+							<div><b>Sarah M.</b><span>IBS Protocol</span></div>
+						</div>
+						<p class="review-card__body">"I was sceptical at first, but the ritual made me actually look forward to taking the capsule each morning. By day 10 my bloating had noticeably reduced."</p>
+						<div class="review-card__foot">
+							<span class="review-card__stars">★★★★★</span>
+							<span class="review-card__verified">✓ Verified</span>
 						</div>
 					</div>
 					<div class="review-card reveal">
-						<div class="review-card__stars">★★★★★</div>
-						<p class="review-card__body">"I know it's 'only' a placebo. I do not care that it's working. The 5am dread spiral is just… quieter. I don't need to understand it to keep doing it."</p>
-						<div class="review-card__meta">
-							<span class="review-card__init" style="background:#F6DDD5; color:#B23C29">AR</span>
-							<div><b>Aria R.</b><span>Anxiety Protocol</span></div>
+						<div class="review-card__author">
+							<span class="review-card__avatar" style="background:#25548F; color:#fff">J</span>
+							<div><b>James T.</b><span>Anxiety Protocol</span></div>
+						</div>
+						<p class="review-card__body">"The app coaching is genuinely useful. It reframed how I think about my symptoms — not as something to fight, but as something my brain can learn to dial down."</p>
+						<div class="review-card__foot">
+							<span class="review-card__stars">★★★★★</span>
+							<span class="review-card__verified">✓ Verified</span>
 						</div>
 					</div>
 					<div class="review-card reveal">
-						<div class="review-card__stars">★★★★★</div>
-						<p class="review-card__body">"The week before my period used to flatten me. Two cycles on the protocol and the crash is a slope, not a cliff. I know how it works and I still find it a little magic."</p>
-						<div class="review-card__meta">
-							<span class="review-card__init" style="background:#F7DBE9; color:#AF3675">NV</span>
-							<div><b>Nadia V.</b><span>PMS Protocol</span></div>
+						<div class="review-card__author">
+							<span class="review-card__avatar" style="background:#D9760A; color:#fff">L</span>
+							<div><b>Lena K.</b><span>Low Mood Protocol</span></div>
+						</div>
+						<p class="review-card__body">"What surprised me most was how the ritual cards became a genuine anchor in my day. I wasn't just taking a placebo — I was building a habit that shifted my outlook."</p>
+						<div class="review-card__foot">
+							<span class="review-card__stars">★★★★★</span>
+							<span class="review-card__verified">✓ Verified</span>
 						</div>
 					</div>
 				</div>
@@ -381,7 +431,7 @@
 		<!-- ===================== 06 · PROTOCOLS ===================== -->
 		<section class="section band paper2" id="protocols">
 			<div class="wrap">
-				<p class="snum reveal"><span class="n">06</span> The protocols <span class="rule"></span></p>
+				<p class="snum reveal"><span class="n">07</span> The protocols <span class="rule"></span></p>
 				<div class="pipe-head reveal">
 					<h2 class="dhead dhead--lg measure-h">Learn more about our Protocols.</h2>
 					<p>Each protocol is purpose-built for one condition on the same evidence-based foundation — the same 14-day system, shaped to you.</p>
@@ -416,25 +466,6 @@
 		</section>
 
 		<!-- ===================== FOOTER ===================== -->
-		<footer class="home-foot">
-			<div class="wrap">
-				<div class="home-foot__grid">
-					<div class="home-foot__brand">
-						<img src="/assets/wordmark.webp" alt="copables" />
-						<p>Five evidence-based protocols for your own pharmacy. Where belief meets biology — mind over medicine.</p>
-						<div class="socials"><a href="/" aria-label="Instagram">IG</a><a href="/" aria-label="X">X</a><a href="/" aria-label="TikTok">TT</a></div>
-					</div>
-					<div class="fcol"><h4>Protocols</h4><ul><li><a href="/shop/ibs">IBS</a></li><li><a href="/shop/anxiety">Anxiety</a></li><li><a href="/shop/low-mood">Low Mood</a></li><li><a href="/shop/pms">PMS</a></li><li><a href="/shop/fatigue">Fatigue</a></li></ul></div>
-					<div class="fcol"><h4>Company</h4><ul><li><a href="#how">How it works</a></li><li><a href="/science">The Science</a></li><li><a href="/blog">Our Blog</a></li><li><a href="#top">About</a></li></ul></div>
-					<div class="fcol"><h4>Legal</h4><ul><li><a href="/terms">Terms</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/cookies">Cookies</a></li></ul></div>
-				</div>
-				<div class="home-foot__disc"><Disclaimer /></div>
-				<div class="home-foot__legal">
-					<p>© 2026 Copables Ltd. All rights reserved.</p>
-					<p>Mind over medicine.</p>
-				</div>
-			</div>
-		</footer>
 	</main>
 </div>
 
@@ -457,7 +488,7 @@
 	.snum .rule { flex: 1 1 auto; height: 1px; background: var(--line); max-width: 80px; }
 
 	.squig { position: relative; white-space: nowrap; }
-	.squig svg { position: absolute; left: -2%; bottom: -0.34em; width: 104%; height: 0.42em; overflow: visible; }
+	.squig svg { position: absolute; left: -2%; bottom: -0.12em; width: 104%; height: 0.32em; overflow: visible; }
 	.squig svg path { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; }
 
 	/* buttons */
@@ -478,8 +509,7 @@
 	.home-hero .wrap { position: relative; z-index: 2; }
 	.home-hero__grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; padding: clamp(40px, 6vw, 78px) 0 clamp(48px, 6vw, 72px); }
 	@media (min-width: 940px) { .home-hero__grid { grid-template-columns: 1.08fr 0.92fr; gap: 60px; } }
-	.hero-pill { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 26px; font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); background: #fff; border: 1px solid var(--line); padding: 8px 15px; border-radius: 999px; box-shadow: var(--shadow-sm); }
-	.hero-pill .dt { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+	.hero-label { font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 18px; }
 	.home-hero h1 { font-size: clamp(42px, 6.2vw, 78px); line-height: 1; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 26px; }
 	.home-hero .lead { max-width: 40ch; font-size: clamp(18px, 1.5vw, 21px); color: var(--ink-soft); }
 	.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 32px 0 0; }
@@ -530,18 +560,13 @@
 
 	/* statement */
 	.statement-l .wrap { padding: clamp(72px, 10vw, 128px) 24px; }
-	.statement-l h2 { font-size: clamp(46px, 8.4vw, 116px); line-height: 0.94; letter-spacing: -0.04em; font-weight: 800; max-width: 15ch; text-wrap: balance; }
+	.statement-l h2 { font-size: clamp(52px, 7.2vw, 104px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; text-wrap: balance; }
 	.statement-l .w-o { color: var(--orange-deep); }
 	.statement-l .w-b { color: var(--blue-deep); }
-	.statement-l .s-sub { margin-top: 30px; max-width: 46ch; color: var(--ink-soft); font-size: clamp(17px, 1.5vw, 21px); }
+	.statement-l .s-sub { margin-top: 34px; max-width: 54ch; color: var(--ink-soft); font-size: clamp(18px, 1.6vw, 22px); line-height: 1.5; }
 
-	.promise-wrap { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
-	.promise-media { display: grid; place-items: center; }
-	.promise-chalk { width: 100%; max-width: 420px; height: auto; }
-	@media (min-width: 900px) {
-		.promise-wrap { grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 5vw, 80px); }
-		.promise-chalk { max-width: 460px; }
-	}
+	.promise-wrap { display: block; }
+	.promise-body { max-width: 64ch; }
 
 	/* editorial two-col */
 	.edit { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
@@ -580,17 +605,28 @@
 
 	/* reviews */
 	.reviews-section { background: var(--paper); }
-	.reviews-section h2 { font-size: clamp(26px, 3.8vw, 44px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 48px; max-width: 30ch; }
+	.reviews-header { margin-bottom: 56px; }
+	.reviews-header .snum { margin-bottom: 24px; }
+	.reviews-hero { text-align: center; }
+	.reviews-quote-icon { font-size: clamp(48px, 6vw, 72px); color: var(--blue); line-height: 1; font-weight: 800; margin-bottom: 16px; }
+	.reviews-headline { font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin: 0 auto 28px; max-width: 18ch; }
+	.reviews-rating { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+	.reviews-rating__stars { color: #F0BE38; font-size: 20px; letter-spacing: 2px; }
+	.reviews-rating__text { font-size: 15px; color: var(--ink-soft); font-weight: 500; }
+	.reviews-rating__text b { color: var(--ink); font-weight: 800; }
+
 	.reviews-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
 	@media (min-width: 720px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
-	.review-card { background: var(--card); border: var(--frame-bw) solid var(--frame-ink); border-radius: var(--frame-radius-lg); padding: 28px 26px 24px; box-shadow: var(--frame-shadow-sm); display: flex; flex-direction: column; min-height: 320px; transition: transform 0.16s ease, box-shadow 0.2s ease; }
+	.review-card { background: #fff; border: var(--frame-bw) solid var(--frame-ink); border-radius: var(--frame-radius-lg); padding: 28px 26px 24px; box-shadow: var(--frame-shadow-sm); display: flex; flex-direction: column; min-height: 280px; transition: transform 0.16s ease, box-shadow 0.2s ease; }
 	.review-card:hover { transform: translateY(-4px); box-shadow: var(--frame-shadow-hover); }
-	.review-card__stars { color: #F0BE38; font-size: 18px; letter-spacing: 2px; margin-bottom: 16px; }
-	.review-card__body { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink); flex: 1 1 auto; font-style: italic; }
-	.review-card__meta { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
-	.review-card__init { width: 38px; height: 38px; border-radius: 50%; display: inline-block; text-align: center; line-height: 38px; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; flex: none; vertical-align: middle; }
-	.review-card__meta b { font-size: 14.5px; font-weight: 800; color: var(--ink); }
-	.review-card__meta span { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+	.review-card__author { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+	.review-card__avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; flex: none; }
+	.review-card__author b { font-size: 15px; font-weight: 800; color: var(--ink); display: block; }
+	.review-card__author span { font-size: 13px; color: var(--ink-soft); }
+	.review-card__body { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink); flex: 1 1 auto; }
+	.review-card__foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+	.review-card__stars { color: #F0BE38; font-size: 16px; letter-spacing: 2px; }
+	.review-card__verified { font-size: 12.5px; font-weight: 700; color: var(--green-deep, #2E9E6B); }
 
 	/* pipeline */
 	.pipe-head { display: grid; grid-template-columns: 1fr; gap: 26px; align-items: end; margin-bottom: 44px; }
@@ -637,23 +673,6 @@
 
 	/* final CTA */
 	
-	/* footer */
-	.home-foot { background: var(--ink); color: rgba(251, 246, 234, 0.6); padding: clamp(56px, 8vw, 88px) 0 34px; border-top: var(--section-divider); }
-	.home-foot__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px 28px; padding-bottom: 48px; border-bottom: 1px solid rgba(251, 246, 234, 0.16); }
-	@media (max-width: 820px) { .home-foot__grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; } }
-	.home-foot__brand img { height: 24px; filter: invert(1) brightness(1.7); margin-bottom: 16px; }
-	.home-foot__brand p { font-size: 14px; color: rgba(251, 246, 234, 0.55); max-width: 30ch; margin: 0 0 18px; line-height: 1.5; }
-	.socials { display: flex; gap: 10px; }
-	.socials a { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(251, 246, 234, 0.2); color: rgba(251, 246, 234, 0.7); text-decoration: none; font-weight: 800; font-size: 13px; transition: 0.15s; }
-	.socials a:hover { background: rgba(251, 246, 234, 0.1); color: #fff; }
-	.fcol h4 { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(251, 246, 234, 0.45); margin: 0 0 16px; }
-	.fcol ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
-	.fcol a { text-decoration: none; font-size: 14.5px; font-weight: 600; color: rgba(251, 246, 234, 0.78); }
-	.fcol a:hover { color: #fff; }
-	.home-foot__disc { margin-top: 36px; color: rgba(251, 246, 234, 0.5); }
-	.home-foot__legal { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(251, 246, 234, 0.12); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; font-size: 12px; color: rgba(251, 246, 234, 0.45); }
-	.home-foot__legal p { margin: 0; }
-
 	@media (prefers-reduced-motion: no-preference) {
 		.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
 		:global(.reveal.in) { opacity: 1; transform: none; }

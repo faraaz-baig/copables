@@ -1,14 +1,6 @@
 <script>
 	let { data } = $props();
 
-	const conditions = [
-		{ name: 'IBS', stat: '90%', desc: 'improvement in IBS severity vs. control. 69% of participants reported clinically meaningful relief.', cite: 'Lembo et al., 2021', url: 'https://journals.lww.com/pain/Fulltext/2021/09000/Open_label_placebo_vs_double_blind_placebo_for.6.aspx', bg: '#422040', fg: '#FFE9F4' },
-		{ name: 'Low Mood', stat: '22%', desc: 'reduction in negative emotions vs. control. Brain scans confirmed activation of emotion-regulation circuitry.', cite: 'Schaefer et al., 2022', url: 'https://www.nature.com/articles/s41386-022-01296-3', bg: '#55A8FA', fg: '#0A2747' },
-		{ name: 'PMS', stat: '79%', desc: 'reduction in PMS symptoms in a 2025 RCT.', cite: 'Frey Nascimento et al., 2025', url: 'https://ebm.bmj.com/content/early/2025/03/03/bmjebm-2024-112875', bg: '#F2B5D4', fg: '#5A1D3A' },
-		{ name: 'Anxiety', stat: '46%', desc: 'reduction in anxiety-induced test failure. Driving-test failure dropped from 53% to 29%.', cite: 'Schaefer & Enge, 2024', url: 'https://www.nature.com/articles/s41598-024-56600-6', bg: '#DE541E', fg: '#FFEDD9' },
-		{ name: 'Fatigue', stat: '29%', desc: 'improvement in fatigue severity in cancer survivors. 39% improvement in fatigue-disrupted quality of life.', cite: 'Hoenemeyer et al., 2018', url: 'https://www.nature.com/articles/s41598-018-20993-y', bg: '#F0BE38', fg: '#4A2E00' }
-	];
-
 	const posts = {
 		'can-honest-placebos-really-work': {
 			title: 'Can honest placebos really work?',
@@ -140,62 +132,44 @@
 		</div>
 	</article>
 
-	<!-- ── 5 Protocol Section ─────────────────────────────────── -->
-	<section class="blog-sec blog-cond">
-		<div class="blog-inner blog-inner--wide">
-			<div class="blog-cond__head">
-				<div class="blog-kicker">The evidence, by condition</div>
-				<h2 class="blog-h2">Research-backed results across <span class="blog-accent-blue">five conditions.</span></h2>
-			</div>
-			<div class="blog-cond__grid">
-				{#each conditions as c (c.name)}
-					<div class="blog-cond__card" style="background:{c.bg}; color:{c.fg}">
-						<div class="blog-cond__name">{c.name}</div>
-						<div class="blog-cond__stat">{c.stat}</div>
-						<div class="blog-cond__desc">{c.desc}</div>
-						<div class="blog-cond__cite">{c.cite}</div>
-						<a class="blog-cond__study" href={c.url} target="_blank" rel="noopener noreferrer" style="color:{c.fg}">View Study →</a>
-					</div>
+	<!-- ── Try It Yourself CTA ──────────────────────────────── -->
+	<section class="blog-cta">
+		<div class="blog-inner">
+			<p class="blog-cta__label">Try it yourself</p>
+			<h2 class="blog-cta__head">Turn what you just read into <span class="blog-cta__accent">action.</span></h2>
+			<p class="blog-cta__body">You now know how open-label placebos work. The next step is finding out if you're a good candidate — and which protocol fits your symptoms best.</p>
+			<hr class="blog-cta__rule" />
+			<p class="blog-cta__sub">Take a 2-minute assessment</p>
+			<div class="blog-cta__grid">
+				{#each [
+					{ name: 'IBS Protocol', bg: '#2D1B2E', fg: '#fff', icon: 'ibs', href: '/quiz/ibs' },
+					{ name: 'Depression Protocol', bg: '#5B9CF0', fg: '#0A2747', icon: 'mood', href: '/quiz/ibs' },
+					{ name: 'PMS Protocol', bg: '#E2A8D5', fg: '#5A1D3A', icon: 'pms', href: '/quiz/ibs' },
+					{ name: 'Anxiety Protocol', bg: '#C04A22', fg: '#FFEDD9', icon: 'anx', href: '/quiz/ibs' },
+					{ name: 'Fatigue Protocol', bg: '#E5B83A', fg: '#4A2E00', icon: 'fat', href: '/quiz/ibs' }
+				] as card}
+					<a class="blog-cta__card" href={card.href} style="background:{card.bg}; color:{card.fg}">
+						<div class="blog-cta__icon" aria-hidden="true">
+							{#if card.icon === 'ibs'}
+								<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="18" cy="16" r="9"/><circle cx="30" cy="32" r="9"/><path d="M12 22c-4 3-4 8 0 10"/><path d="M36 28c4 3 4 8 0 10"/></svg>
+							{:else if card.icon === 'mood'}
+								<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 38a14 14 0 0 1 28 0" fill="currentColor" fill-opacity="0.10"/><line x1="24" y1="10" x2="24" y2="5"/><line x1="12" y1="12" x2="8" y2="8"/><line x1="36" y1="12" x2="40" y2="8"/></svg>
+							{:else if card.icon === 'pms'}
+								<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="24" cy="24" r="12"/><path d="M30 14a10 10 0 0 0-10 16 10 10 0 0 1 10-16Z" fill="currentColor" fill-opacity="0.15"/></svg>
+							{:else if card.icon === 'anx'}
+								<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="24" cy="24" r="11"/><circle cx="24" cy="24" r="6"/><circle cx="24" cy="24" r="2" fill="currentColor"/></svg>
+							{:else if card.icon === 'fat'}
+								<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 30c12-10 22-10 32 0s14-8 18-12"/><circle cx="16" cy="22" r="3" fill="currentColor" fill-opacity="0.15"/><circle cx="32" cy="28" r="3" fill="currentColor" fill-opacity="0.15"/></svg>
+							{/if}
+						</div>
+						<span class="blog-cta__name">{card.name}</span>
+						<span class="blog-cta__btn">TAKE ASSESSMENT <span aria-hidden="true">→</span></span>
+					</a>
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<!-- ── Footer ───────────────────────────────────────────── -->
-	<footer class="blog-foot">
-		<div class="blog-inner">
-			<div class="blog-foot__grid">
-				<div>
-					<img class="blog-foot__logo" src="/assets/wordmark.png" alt="copables" />
-					<p class="blog-foot__blurb">Where belief meets behavior. 14 days to a brighter, healthier you. Mind over medicine.</p>
-				</div>
-				<div>
-					<div class="blog-foot__h">Protocols</div>
-					<div class="blog-foot__link"><a href="/shop/low-mood">Low Mood</a></div>
-					<div class="blog-foot__link"><a href="/shop/ibs">IBS</a></div>
-					<div class="blog-foot__link"><a href="/shop/anxiety">Anxiety</a></div>
-					<div class="blog-foot__link"><a href="/shop/pms">PMS</a></div>
-					<div class="blog-foot__link"><a href="/shop/fatigue">Fatigue</a></div>
-				</div>
-				<div>
-					<div class="blog-foot__h">Company</div>
-					<div class="blog-foot__link"><a href="/science">The Science</a></div>
-					<div class="blog-foot__link"><a href="/blog">Our Blog</a></div>
-					<div class="blog-foot__link"><a href="/">Home</a></div>
-				</div>
-				<div>
-					<div class="blog-foot__h">Legal</div>
-					<div class="blog-foot__link"><a href="https://www.copables.com/terms" target="_blank" rel="noopener noreferrer">Terms</a></div>
-					<div class="blog-foot__link"><a href="https://www.copables.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a></div>
-					<div class="blog-foot__link"><a href="https://www.copables.com/eula" target="_blank" rel="noopener noreferrer">Cookies</a></div>
-				</div>
-			</div>
-			<div class="blog-foot__bottom">
-				<span>© 2026 Copables Ltd. All rights reserved.</span>
-				<span>Mind over medicine.</span>
-			</div>
-		</div>
-	</footer>
 </div>
 
 <style>
@@ -305,116 +279,22 @@
 	}
 	.sources-list a:hover { opacity: 0.6; }
 
-	/* ── 5 Protocol Section ───────────────────────────────── */
-	.blog-cond { background: #FFFDF7; }
-	.blog-cond__head { margin-bottom: 48px; max-width: 880px; }
-	.blog-cond__grid {
-		display: grid;
-		grid-template-columns: repeat(5, 1fr);
-		gap: 12px;
-	}
-	.blog-cond__card {
-		padding: 28px 22px 22px;
-		border-radius: 12px;
-		border: 2px solid #000;
-		display: flex;
-		flex-direction: column;
-		min-height: 360px;
-	}
-	.blog-cond__name {
-		font-size: 28px;
-		font-weight: 700;
-		letter-spacing: -0.01em;
-		text-transform: uppercase;
-		margin-bottom: 18px;
-		line-height: 1;
-	}
-	.blog-cond__stat {
-		font-size: 56px;
-		font-weight: 700;
-		letter-spacing: -0.04em;
-		line-height: 0.92;
-		margin-bottom: 14px;
-		opacity: 0.92;
-	}
-	.blog-cond__desc {
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 1.45;
-		flex: 1;
-	}
-	.blog-cond__cite {
-		margin-top: 18px;
-		padding-top: 14px;
-		border-top: 1px solid currentColor;
-		font-size: 12px;
-		font-style: italic;
-		line-height: 1.4;
-	}
-	.blog-cond__study {
-		margin-top: 8px;
-		font-size: 12px;
-		font-weight: 700;
-		text-decoration: none;
-		border-bottom: 1px solid currentColor;
-		padding-bottom: 1px;
-		align-self: flex-start;
-	}
-	.blog-cond__study:hover { opacity: 0.78; }
-
-	/* ── Footer ───────────────────────────────────────────── */
-	.blog-foot {
-		padding: 80px 48px 40px;
-		background: #000;
-		color: #fff;
-	}
-	.blog-foot__grid {
-		display: grid;
-		grid-template-columns: 1.4fr 1fr 1fr 1fr;
-		gap: 48px;
-		padding-bottom: 48px;
-		border-bottom: 1px solid rgba(255,255,255,0.2);
-	}
-	.blog-foot__logo {
-		height: 26px;
-		width: auto;
-		filter: invert(1) brightness(1.7);
-	}
-	.blog-foot__blurb {
-		margin-top: 20px;
-		font-size: 16px;
-		line-height: 1.5;
-		font-weight: 300;
-		max-width: 320px;
-		color: rgba(255,255,255,0.72);
-	}
-	.blog-foot__h {
-		font-size: 11px;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		font-weight: 700;
-		color: rgba(255,255,255,0.5);
-		margin-bottom: 16px;
-	}
-	.blog-foot__link {
-		margin-top: 10px;
-	}
-	.blog-foot__link a {
-		font-size: 15px;
-		font-weight: 500;
-		color: #fff;
-		text-decoration: none;
-	}
-	.blog-foot__link a:hover { opacity: 0.78; }
-	.blog-foot__bottom {
-		padding-top: 28px;
-		display: flex;
-		justify-content: space-between;
-		gap: 16px;
-		font-size: 12px;
-		color: rgba(255,255,255,0.5);
-		letter-spacing: 0.04em;
-	}
+	/* ── CTA ──────────────────────────────────────────────── */
+	.blog-cta { border-bottom: 3px solid #000; padding: 100px 48px; background: #FFFDF7; }
+	.blog-cta__label { font-size: 11px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: #1E6FD9; margin-bottom: 18px; }
+	.blog-cta__head { font-size: clamp(36px, 5.2vw, 64px); font-weight: 700; letter-spacing: -0.03em; line-height: 0.98; margin: 0 0 22px; max-width: 18ch; }
+	.blog-cta__accent { color: #1E6FD9; }
+	.blog-cta__body { font-size: 17px; line-height: 1.6; color: #1B1C1C; max-width: 54ch; margin: 0 0 32px; }
+	.blog-cta__rule { border: 0; height: 1px; background: rgba(0,0,0,0.12); margin: 0 0 24px; }
+	.blog-cta__sub { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: #000; margin-bottom: 18px; }
+	.blog-cta__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+	.blog-cta__card { display: flex; flex-direction: column; justify-content: space-between; min-height: 170px; border-radius: 16px; padding: 18px 18px 16px; text-decoration: none; transition: transform 0.14s ease, box-shadow 0.2s ease; box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
+	.blog-cta__card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 rgba(0,0,0,0.1); }
+	.blog-cta__icon { width: 84px; height: 84px; margin-bottom: 10px; }
+	.blog-cta__icon svg { width: 100%; height: 100%; }
+	.blog-cta__name { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 32px; }
+	.blog-cta__btn { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 9px 13px; border-radius: 999px; background: rgba(0,0,0,0.12); color: inherit; }
+	.blog-cta__card:hover .blog-cta__btn { background: rgba(0,0,0,0.2); }
 
 	/* ── Responsive ───────────────────────────────────────── */
 	@media (max-width: 1024px) {
@@ -422,14 +302,16 @@
 		.blog-article { padding: 64px 40px 96px; }
 		.blog-sec { padding: 96px 40px; }
 		.blog-foot { padding: 72px 40px 36px; }
-		.blog-cond__grid { grid-template-columns: repeat(3, 1fr); }
+		.blog-cta { padding: 80px 40px; }
+		.blog-cta__grid { grid-template-columns: repeat(3, 1fr); }
 	}
 	@media (max-width: 900px) {
 		.blog-back { padding: 18px 32px; }
 		.blog-article { padding: 56px 32px 80px; }
 		.blog-sec { padding: 80px 32px; }
 		.blog-foot { padding: 64px 32px 32px; }
-		.blog-cond__grid { grid-template-columns: repeat(2, 1fr); }
+		.blog-cta { padding: 64px 32px; }
+		.blog-cta__grid { grid-template-columns: repeat(2, 1fr); }
 		.blog-foot__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
 		.blog-foot__bottom { flex-direction: column; gap: 8px; }
 	}
@@ -438,10 +320,11 @@
 		.blog-article { padding: 40px 20px 64px; }
 		.blog-sec { padding: 64px 20px; }
 		.blog-foot { padding: 48px 20px 28px; }
+		.blog-cta { padding: 48px 20px; }
+		.blog-cta__grid { grid-template-columns: 1fr; }
 		.blog-h2 { font-size: clamp(32px, 9vw, 48px); }
 		.post-h1 { font-size: clamp(32px, 8vw, 44px); }
 		.post-p { font-size: 16px; }
-		.blog-cond__grid { grid-template-columns: 1fr; }
 		.blog-foot__grid { grid-template-columns: 1fr; }
 	}
 </style>
