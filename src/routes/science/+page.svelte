@@ -35,26 +35,26 @@
 
 	// Credential strip — real logos only.
 	const logos = [
-		{ src: '/assets/science/logo-harvard.png', alt: 'Harvard Medical School' },
-		{ src: '/assets/science/logo-columbia.png', alt: 'Columbia University Vagelos College of Physicians and Surgeons' },
-		{ src: '/assets/science/logo-danafarber.png', alt: 'Dana-Farber Cancer Institute' },
-		{ src: '/assets/science/logo-mdanderson.png', alt: 'The University of Texas MD Anderson Cancer Center' }
+		{ src: '/assets/science/logo-harvard.webp', alt: 'Harvard Medical School' },
+		{ src: '/assets/science/logo-columbia.webp', alt: 'Columbia University Vagelos College of Physicians and Surgeons' },
+		{ src: '/assets/science/logo-danafarber.webp', alt: 'Dana-Farber Cancer Institute' },
+		{ src: '/assets/science/logo-mdanderson.webp', alt: 'The University of Texas MD Anderson Cancer Center' }
 	];
 
 	const mechanisms = [
 		{
 			n: '01', title: 'Conditioned Expectation',
-			img: '/assets/science/mech-dog-bell.png', imgAlt: 'Sketch of a dog responding to a bell — Pavlovian conditioning',
+			img: '/assets/science/mech-dog-bell.webp', imgAlt: 'Sketch of a dog responding to a bell — Pavlovian conditioning',
 			body: `Your body has spent a lifetime learning that engaging with pills, rituals, and care often precedes relief — and reading about people like you who have gotten better strengthens that learned response. This creates a new prediction in your brain: this might help me, because it's helped others.`
 		},
 		{
 			n: '02', title: 'Symptom Loop Reset',
-			img: '/assets/science/mech-boy-thought.png', imgAlt: 'Sketch of a person with a tangled thought bubble untangling',
+			img: '/assets/science/mech-boy-thought.webp', imgAlt: 'Sketch of a person with a tangled thought bubble untangling',
 			body: `Functional symptoms create noisy feedback loops that amplify themselves — your body senses something off, your brain interprets it as danger, the alarm escalates. An honest placebo protocol can interrupt these loops, giving your nervous system a chance to recalibrate.`
 		},
 		{
 			n: '03', title: 'The Reward of Action',
-			img: '/assets/science/mech-girl-present.png', imgAlt: 'Sketch of a person holding a wrapped present',
+			img: '/assets/science/mech-girl-present.webp', imgAlt: 'Sketch of a person holding a wrapped present',
 			body: `Choosing to take action activates reward pathways in the brain. Neuroscience shows that the act of doing something feels measurably better than doing nothing — like when you decide to take a different route due to traffic. You feel better when you have ownership over your life.`
 		}
 	];
@@ -94,8 +94,16 @@
 </script>
 
 <svelte:head>
-	<title>Copables — The Science</title>
-	<meta name="description" content="The evidence behind open-label placebos — one of the most fascinating findings in modern medicine. Research-backed results across five conditions." />
+	<title>The Science — How Open-Label Placebos Work | Copables</title>
+	<meta name="description" content="The evidence behind open-label placebos: Harvard 2010, Baylor 2021, PubMed 2022, MIT 2023. Research-backed results across IBS, anxiety, PMS, fatigue and low mood." />
+	<meta property="og:title" content="The Science — How Open-Label Placebos Work" />
+	<meta property="og:description" content="Harvard, Baylor, PubMed and MIT research on honest placebos. No deception required." />
+	<meta property="og:type" content="article" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="The Science — How Open-Label Placebos Work" />
+	<meta name="twitter:description" content="Harvard, Baylor, PubMed and MIT research on honest placebos." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Science Behind Open-Label Placebos","description":"Research from Harvard, Baylor, PubMed and MIT on honest placebo effects.","author":{"@type":"Organization","name":"Copables"},"publisher":{"@type":"Organization","name":"Copables","logo":{"@type":"ImageObject","url":"https://copables.com/assets/wordmark.webp"}},"datePublished":"2025-01-01","image":"https://copables.com/assets/lineup.webp"}</script>`}
 </svelte:head>
 
 <!-- Reusable editorial study section (Origin / Matches / Framing) -->
@@ -133,7 +141,7 @@
 		<div class="sci-hero__grid">
 			<div class="sci-hero__img">
 				<!-- stand-in: design uses a five-bottle lineup photo (asset not provided) -->
-				<img src="/assets/ibs-bottle.png" alt="A Copables open-label placebo bottle on a soft cream backdrop." />
+				<img src="/assets/ibs-bottle.webp" alt="A Copables open-label placebo bottle on a soft cream backdrop." />
 			</div>
 			<div class="sci-hero__text">
 				<div class="sci-hero__kicker">The Science</div>

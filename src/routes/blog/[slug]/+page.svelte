@@ -1,6 +1,7 @@
 <script>
 	let { data } = $props();
 
+	/** @type {Record<string, any>} */
 	const posts = {
 		'can-honest-placebos-really-work': {
 			title: 'Can honest placebos really work?',
@@ -88,6 +89,18 @@
 
 <svelte:head>
 	<title>{post.title} — Copables Blog</title>
+	<meta name="description" content={post.excerpt} />
+	<meta property="og:title" content={post.title} />
+	<meta property="og:description" content={post.excerpt} />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="https://copables.com/blog/{data.slug}" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta property="article:author" content={post.author} />
+	<meta property="article:published_time" content={post.date} />
+	<meta name="twitter:title" content={post.title} />
+	<meta name="twitter:description" content={post.excerpt} />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"${post.title.replace(/"/g,'\\"')}","description":"${post.excerpt.replace(/"/g,'\\"')}","author":{"@type":"Person","name":"${post.author.replace(/"/g,'\\"')}"},"publisher":{"@type":"Organization","name":"Copables","logo":{"@type":"ImageObject","url":"https://copables.com/assets/wordmark.webp"}},"datePublished":"${post.date}","image":"https://copables.com/assets/lineup.webp","url":"https://copables.com/blog/${data.slug}"}</script>`}
 </svelte:head>
 
 <div class="blog">

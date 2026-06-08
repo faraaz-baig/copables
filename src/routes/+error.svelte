@@ -5,6 +5,12 @@
 	const is404 = $derived($page.status === 404);
 </script>
 
+<svelte:head>
+	<title>Page Not Found — Copables</title>
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="description" content="This page could not be found. Return to Copables home or take the free assessment." />
+</svelte:head>
+
 <!-- chalk roughen filter -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"
 	><defs

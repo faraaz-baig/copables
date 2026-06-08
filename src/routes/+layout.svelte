@@ -37,9 +37,24 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#FBF6EA" />
+	<link rel="canonical" href="https://copables.com{page.url.pathname}" />
 	{#if isHidden}
 		<meta name="robots" content="noindex, nofollow" />
+	{:else}
+		<meta name="robots" content="index, follow" />
 	{/if}
+	<!-- Global OG defaults (pages override per-page) -->
+	<meta property="og:site_name" content="Copables" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://copables.com{page.url.pathname}" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@copables" />
 	<script defer src="https://us-assets.i.posthog.com/static/array.js"></script>
 	<script defer>
 		window.posthog = window.posthog || [];

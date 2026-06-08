@@ -3,7 +3,7 @@
 	import { track } from '$lib/analytics';
 
 	// ── Screen definitions (47 screens, verbatim from spec) ───────────────
-	const SCALE = ['Not at all', 'A little', 'A lot', 'Exactly me'];
+	const SCALE = ['Not at all', 'A little', 'Somewhat Agree', 'Strongly Agree'];
 
 	const SCREENS: any[] = [
 		/* 1 */ { type:'single', tag:'Your symptoms', kick:"Let's start with you", title:'How long have you been struggling with IBS?', options:['Less than 1 month','1–3 months','3–6 months','6–12 months','1+ year'] },
@@ -11,48 +11,48 @@
 		/* 3 */ { type:'multi', tag:'Your symptoms', kick:'Your triggers', title:'What are your IBS triggers?', hint:'Check all that apply.', options:['Certain foods','Caffeine','Poor sleep','Anxiety / stress','Medication','Exercise','Other',"I'm not sure"] },
 		/* 4 */ { type:'single', tag:'About you', kick:'A little context', title:"What's your gender?", options:['Male','Female','Non-binary','Other','Prefer not to say'] },
 		/* 5 */ { type:'single', tag:'About you', kick:'Age', title:"What's your age group?", options:['18–24','25–34','35–44','45–54','55+'] },
-		/* 6 */ { type:'slider', tag:'Your symptoms', kick:'Pain severity', title:'Rate your abdominal pain severity.', hint:'Select 0 if none.', left:'None', right:'Severe', readout:['No pain','Mild','Moderate','Strong','Severe'] },
-		/* 7 */ { type:'slider', tag:'Your symptoms', kick:'Pain frequency', days:true, title:'For every 10 days, how many days do you have abdominal pain?', left:'0 days', right:'10 days' },
-		/* 8 */ { type:'slider', tag:'Your symptoms', kick:'Bowel movements', title:'How dissatisfied are you with your bowel movements?', left:'Satisfied', right:'Totally dissatisfied', readout:['Satisfied','Mostly satisfied','Mixed','Dissatisfied','Totally dissatisfied'] },
-		/* 9 */ { type:'slider', tag:'Your symptoms', kick:'Bloating', title:'How much do you suffer from bloating?', left:'None', right:'Severe', readout:['None','Mild','Moderate','Strong','Severe'] },
+		/* 6 */ { type:'slider', tag:'Your symptoms', kick:'Pain severity', title:'Rate your abdominal pain severity from 0-100 (Select 0 if none)', hint:'Select 0 if none.', left:'None', right:'Severe', readout:['No pain','Mild','Moderate','Strong','Severe'] },
+		/* 7 */ { type:'slider', tag:'Your symptoms', kick:'Pain frequency', days:true, title:'For every 10 days, how many days do you experience abdominal pain?', left:'0 days', right:'10 days' },
+		/* 8 */ { type:'slider', tag:'Your symptoms', kick:'Bowel movements', title:'How dissatisfied with your bowel movements are you from 0-100?', left:'Satisfied', right:'Totally dissatisfied', readout:['Satisfied','Mostly satisfied','Mixed','Dissatisfied','Totally dissatisfied'] },
+		/* 9 */ { type:'slider', tag:'Your symptoms', kick:'Bloating', title:'Do you suffer from bloating?', left:'None', right:'Severe', readout:['None','Mild','Moderate','Strong','Severe'] },
 		/* 10 */ { type:'slider', tag:'Your symptoms', kick:'Life impact', title:'How much does your IBS affect your life?', left:'None', right:'Completely interferes', readout:['No impact','A little','Moderate','A lot','Completely interferes'] },
-		/* 11 */ { type:'info', tag:'A clear picture', tone:'paper', kick:'A clear picture', title:"We can already see a clear pattern in what you've told us.", sub:"What you're describing is real, it's common, and it responds to the right approach. That's exactly what the rest of this is figuring out for you. Let's keep going.", cta:'Continue' },
-		/* 12 */ { type:'info', tag:'A closer look', tone:'paper', glyph:'◉', kick:'A closer look', title:'For this next group of statements, tell us how much each one sounds like you.', sub:"There are no right answers here. Just go with your gut on each one.", cta:'Continue' },
+		/* 11 */ { type:'info', tag:'A clear picture', tone:'paper', kick:'A clear picture', title:"We can already see a clear pattern in what you've told us.", sub:"The symptoms you're describing are real and may respond to the right approach, depending on your psychographic profile. That's exactly what the rest of this assessment will figure out for you. Let's keep going.", cta:'Continue' },
+		/* 12 */ { type:'info', tag:'A closer look', tone:'paper', glyph:'◉', kick:'A closer look', title:'For this next group of statements, tell us how much you agree with each one.', cta:'Continue' },
 		/* 13 */ { type:'scale', tag:'Sounds like me?', kick:'Group 1 of 3', title:'How much does each statement sound like you?', hint:'Tap a response for every line.', scaleLabels:SCALE, statements:['I often think about where the nearest bathroom is.','Before an important event, I eat less, or nothing, just in case.','When I eat or drink something, it sometimes feels like a gamble.'] },
 		/* 14 */ { type:'scale', tag:'Sounds like me?', kick:'Group 2 of 3', title:'And these?', hint:'Tap a response for every line.', scaleLabels:SCALE, statements:["I've turned down plans, dates, or travel because of my gut.",'My stomach gets worse at inconvenient or stressful times.',"I've slowly cut out foods I used to love, and the list keeps growing."] },
 		/* 15 */ { type:'scale', tag:'Sounds like me?', kick:'Group 3 of 3', title:'Last few.', hint:'Tap a response for every line.', scaleLabels:SCALE, statements:["I feel embarrassed talking about my symptoms, even with people close to me.",'When a flare hits, my mood often drops.',"Sometimes it feels like my own body betrays me at the worst possible moments."] },
-		/* 16 */ { type:'info', tag:"You're not alone", tone:'paper', face:true, kick:"You're not alone", title:'The American College of Gastroenterology estimates as many as 1 in 7 American adults live with IBS.', sub:"And most never get a clear answer; only about 5–7% are ever formally diagnosed. What you're describing has a name — and a growing body of research behind it.", quote:{ text:"I started searching 'unexplainable stomach pain' on Reddit and found out about IBS. But the other things I tried all felt vibe-based. You miss out on having a rigorous process to actually get better.", by:'Lucas P.', role:'Verified member', av:['LP','#2F95F2'] }, foot:'Prevalence figure attributed to the American College of Gastroenterology.' },
-		/* 17 */ { type:'info', tag:'Your history', tone:'paper', glyph:'✦', kick:'Your history', title:"Now a bit about your history, so we can tell whether this protocol is actually right for you.", sub:"These questions help us tell you honestly whether this protocol is right for you — instead of selling you something that won't work.", foot:'About 90 seconds left.', cta:'Continue' },
+		/* 16 */ { type:'info', tag:"You're not alone", tone:'paper', face:true, kick:"You're not alone", title:'The American College of Gastroenterology estimates as many as 1 in 7 American adults live with IBS.', sub:"And most never get a clear answer; only about 5–7% are ever formally diagnosed.", quote:{ text:"I started searching unexplainable stomach pain on reddit and then found out about IBS. But then all the other treatments I started doing besides Copables all seemed vibe-based, you miss out on actually having a rigorous process to get better.", by:'Lucas P.', role:'Verified member', av:['LP','#2F95F2'] }, foot:'Prevalence figure attributed to the American College of Gastroenterology.' },
+		/* 17 */ { type:'info', tag:'Your history', tone:'paper', glyph:'✦', kick:'Your history', title:"Now a bit about your history, so we can tell whether this protocol is actually right for you.", foot:'About 90 seconds left.', cta:'Continue' },
 		/* 18 */ { type:'single', tag:'Your history', kick:'Stress', title:'How would you rate your stress over the last year?', options:['High and constant','Comes in waves','Manageable','Low'] },
 		/* 19 */ { type:'single', tag:'Your history', kick:'Sleep', title:"How's your sleep?", options:['Poor, I wake up tired','Inconsistent','Pretty good','Great'] },
 		/* 20 */ { type:'single', tag:'Your history', kick:'Medication', title:'Do you currently take any medication for your gut?', options:['Yes, prescription','Yes, over-the-counter','No'] },
-		/* 21 */ { type:'single', tag:'Your history', kick:'Where you are', title:'Where would you say you are right now?', options:['In the middle of trying treatments and want something that actually works','Finished other treatments and need ongoing relief','Never got a real answer and I\'m open to a new approach','Just starting to take IBS seriously'] },
+		/* 21 */ { type:'single', tag:'Your history', kick:'Where you are', title:'Where would say you are right now in your IBS journey?', options:['In the middle of trying treatments and want something that actually works','Finished other treatments and need ongoing relief','Never got a real answer and I\'m open to a new approach','Just starting to take IBS seriously'] },
 		/* 22 */ { type:'multi', tag:'Your history', kick:'Life impact', title:'How does IBS negatively impact your life?', hint:'Select all that apply.', options:['Physical pain or discomfort',"Can't eat foods I love",'Affects my confidence','Bad toilet experiences','Affects personal relationships','Worrying about travel','Struggle with work','More / other'] },
 		/* 23 */ { type:'multi', tag:'Your history', kick:"What you've tried", title:"Finding the right solution can be hard; a lot of people end up feeling like they've tried everything. What have you tried?", hint:'Select all that apply.', options:['Avoiding certain foods / FODMAP','Medication','Peppermint','Probiotics','Therapy','Acupuncture / alternative medicine','Supplements','More / other'] },
 		/* 24 */ { type:'single', tag:'Your history', kick:'The result', title:'Did these solutions work?', options:['Yes','Somewhat','A little','No','Not sure'] },
-		/* 25 */ { type:'single', tag:'Your history', kick:'The cost', title:'Roughly how much have you already spent trying to fix this? (Tests, doctors, diets, supplements, over-the-counter meds, all of it.)', options:["Honestly, I've lost count",'Over $1,000','A few hundred','Not much yet'] },
+		/* 25 */ { type:'single', tag:'Your history', kick:'The cost', title:'Roughly how much money have you already spent over your lifetime trying to fix this?', hint:'Count tests, appointments, doctors, diets, supplements, over-the-counter meds, all of it.', options:['$0 -$50','$50 - $100','$100 - $250','$250+'] },
 		/* 26 */ { type:'multi', tag:'Your history', kick:'The goal', title:'What would you like to do if you were free from IBS restrictions?', hint:'Check all that apply.', options:['Eat the foods I love','Enjoy social life and relationships','Sleep better','Travel with confidence','Be more present at work','More / other'] },
-		/* 27 */ { type:'single', tag:'Your history', kick:'The doctor', title:'When you saw a doctor, what did they tell you?', options:['"Your tests are normal," but I\'m still in pain','"It\'s probably just stress"','"Learn to manage it / change your diet"','I got a diagnosis but the treatment didn\'t fix it',"I never went; it comes and goes, so I rode it out"] },
-		/* 28 */ { type:'multi', tag:'Safety check', kick:'A quick check', title:'Have you noticed any of the following? (Select any that apply.)', hint:'If you select any of these, your results will show the "please see a doctor first" path instead of the offer.', options:['Blood in your stool','Unexplained weight loss','Symptoms that regularly wake you from sleep','Symptoms that first started after age 50','A family history of bowel disease or bowel cancer','None of these'] },
-		/* 29 */ { type:'info', tag:'Real results', tone:'paper', glyph:'★', kick:'Real results from real people', title:"It's not just symptom relief.", quote:{ text:"I did the 2-week Copables protocol for IBS, and beyond a noticeable improvement in symptoms, I got an unexpected benefit worth far more than I imagined. For the first time in my life, I had the confidence and discipline to make progress on long-time goals I'd repeatedly failed at. My best guess is part of the protocol sank into my subconscious.", by:'Shawn T.', role:'Verified member · Feb 2026', av:['ST','#2F95F2'] }, cta:'Continue' },
+		/* 27 */ { type:'single', tag:'Your history', kick:'The doctor', title:'If you\'ve seen a doctor, what did they tell you?', options:['"Your tests are normal," but I\'m still in pain','"It\'s probably just stress"','"Learn to manage it / change your diet"','I got a diagnosis but the treatment didn\'t fix it',"I never went; it comes and goes, so I rode it out"] },
+		/* 28 */ { type:'multi', tag:'Safety check', kick:'A quick check', title:'Have you noticed any of the following? (Select any that apply.)', hint:'If you select any of these, your results will show the "please see a doctor first" path instead of the Copables protocol.', options:['Blood in your stool','Unexplained weight loss','Symptoms that regularly wake you from sleep','Symptoms that first started after age 50','A family history of bowel disease or bowel cancer','None of these'] },
+		/* 29 */ { type:'info', tag:'Real results', tone:'paper', glyph:'★', kick:'Real results from real people', title:"Benefits beyond IBS from a recent user:", quote:{ text:"I did the 2-week Copables protocol for IBS, and beyond a noticeable improvement in symptoms, I got an unexpected benefit worth far more than I imagined. For the first time in my life, I had the confidence and discipline to make progress on long-time goals I'd repeatedly failed at. My best guess is part of the protocol sank into my subconscious.", by:'Shawn T.', role:'Verified member · Feb 2026', av:['ST','#2F95F2'] }, cta:'Continue' },
 		/* 30 */ { type:'single', tag:'A quick check', kick:'Stress & symptoms', title:'Do your symptoms get worse during periods of high stress or anxiety?', options:['Yes','Somewhat','No'] },
 		/* 31 */ { type:'single', tag:'A quick check', kick:'Your experience', title:'Have you ever tried Cognitive Behavioural Therapy-style techniques for IBS? (Reframing, journalling, etc.)', options:['Yes, I practice regularly','I have some experience',"No, but I'm open to it","No, and I'm not interested"] },
-		/* 32 */ { type:'info', tag:'Our approach', tone:'dark', wide:true, kick:"Here's what's really going on", title:"Your gut isn't damaged. It's on high alert.", loop:true, prose:["Your gut and brain are connected by a constant two-way signal, the <strong>gut-brain axis</strong>. Under prolonged stress, or after a big life change, that signal can get stuck in <strong>threat mode</strong>, so your gut overreacts to normal food, normal water, even normal nerves.","A Harvard researcher, Dr. Ted Kaptchuk, ran peer-reviewed trials showing the gut-brain connection can respond to a structured mind-body protocol, <strong>even when people know exactly what they're taking.</strong> That research is the foundation of Copables."], cta:'So what do I do about it?' },
-		/* 33 */ { type:'info', tag:'Our approach', tone:'paper', wide:true, kick:'We got you', title:'This is exactly what Copables was built for.', product:'/assets/ibs-bottle.png', sub:"A 2-week, Harvard-research-backed protocol that retrains the gut-brain connection. It's not another diet — and it's not \"all in your head.\" It works with your nervous system instead of fighting your gut.", comp:[{ ic:'◷', h:'A daily capsule ritual', p:'Your physical anchor — the cue your nervous system learns to trust.' },{ ic:'✦', h:'Guided CBT-style cards', p:'Short techniques that calm the stress-gut loop at its source.' },{ ic:'▦', h:'A simple app', p:'Tracks your symptoms and adapts the protocol to you.' }], honest:{ q:"Here's the part no one else will tell you upfront:", p:'The capsules are <strong>open-label placebos.</strong> No hidden drug, and we say so on the label. Sounds backwards, but Harvard trials found that for IBS, a placebo taken as a daily ritual still reduces symptoms, even when patients are told exactly what it is. Paired with the CBT techniques, that\'s the mechanism. (Full science on your results page, we don\'t expect you to just take our word for it.)' }, cta:"Let's finish and build your personal protocol" },
-		/* 34 */ { type:'info', tag:'Almost there', tone:'paper', kick:'Almost there', title:"You're nearly done.", sub:"These last questions check how well this specific approach fits you. It honestly isn't the right fit for everyone, and we'd rather be straight with you than sell you something that won't work.", cta:'Continue' },
-		/* 35 */ { type:'slider', tag:'Fit check', kick:'When a flare begins', title:'When a flare-up begins, which reaction feels closer to yours?', left:'I can manage it', right:'It ruins my day', readout:["I can manage it","Mostly manageable","It depends","Hard to cope","It ruins my day"] },
+		/* 32 */ { type:'info', tag:'Our approach', tone:'dark', wide:true, kick:"Here's what's really going on", title:"Your gut may be miscommunicating with your brain.", loop:true, prose:["IBS is now known as a dysfunction of the gut-brain axis Your gut and brain are connected by a constant two-way signal. Under prolonged stress, or after a big life change, that signal can get stuck in threat or alarm mode, so your brain amplifies or misinterprets sensations in your gut. IBS can be caused by a constant miscommunication between these two major organs in your body.","A Harvard researcher, Dr. Ted Kaptchuk, pioneered groundbreaking researach in 2010 that showed that the gut-brain connection can respond to a structured mind-body protocol centred around placebos, even when patients knew exactly what they were taking. "], cta:'So what do I do about it?' },
+		/* 33 */ { type:'info', tag:'Our approach', tone:'paper', wide:true, kick:'We got you', title:'This Harvard research on non-deceptive placebos forms the foundation of a Copables protocol.', product:'/assets/ibs-bottle.webp', sub:"Copables is a 2-week research and science-backed protocol that focuses on repairing the gut-brain axis. It works together with your nervous system instead of fighting your body and what's going on in your gut.", comp:[{ ic:'◷', h:'A daily capsule ritual', p:'Your physical anchor — the cue your nervous system learns to trust.' },{ ic:'✦', h:'Guided CBT-style cards', p:'Short techniques that calm the stress-gut loop at its source.' },{ ic:'▦', h:'A simple app', p:'Tracks your symptoms and adapts the protocol to you.' }], honest:{ q:"Here's the part no one else will tell you upfront:", p:'There is no medical ingredient contained anywhere in this protocol and yet, the research still shows that non-deceptive placebos can help. That\'s because the "how" behind this protocol is more important than what it is you are actually taking.' }, cta:"Let's finish and build your personal protocol" },
+		/* 34 */ { type:'info', tag:'Almost there', tone:'paper', kick:'Almost there', title:"You're nearly done.", sub:"These last questions check how well this specific Copables OLP protocol approach fits you. OLP isn't the right fit for everyone, and we'd rather be honest with you than suggest something that won't work.", cta:'Continue' },
+		/* 35 */ { type:'slider', tag:'Fit check', kick:'When a flare begins', title:'When a flare-up begins, which reaction feels closer to yours?', left:'I can manage it', right:'My day is destroyed', readout:["I can manage it","Mostly manageable","It depends","Hard to cope","My day is destroyed"] },
 		/* 36 */ { type:'slider', tag:'Fit check', kick:'Small sensations', title:'How often does a small sensation make you brace for a severe flare?', left:'Never', right:'Always', readout:['Never','Rarely','Sometimes','Often','Always'] },
-		/* 37 */ { type:'slider', tag:'Fit check', kick:'New experiences', title:'How open are you to trying unconventional experiences?', left:'Not open', right:'Very open', readout:['Not open','Slightly open','Balanced','Pretty open','Very open'] },
+		/* 37 */ { type:'slider', tag:'Fit check', kick:'New experiences', title:'How open are you to trying unconventional experiences in life?', left:'Not open', right:'Very open', readout:['Not open','Slightly open','Balanced','Pretty open','Very open'] },
 		/* 38 */ { type:'slider', tag:'Fit check', kick:'Curiosity', title:'How curious are you about the "why" behind your gut symptoms?', left:'Not curious', right:'Very curious', readout:['Not curious','A little','Somewhat','Curious','Very curious'] },
-		/* 39 */ { type:'info', tag:'Fit check', tone:'paper', glyph:'◍', wide:true, kick:'Good signs', title:'Curiosity and an open mind are two of the traits that line up with a strong response to this kind of approach.', sub:"If that sounds like you, good sign. If it's not quite you yet, that's fine too; it's part of what the protocol builds.", cta:'Continue' },
+		/* 39 */ { type:'info', tag:'Fit check', tone:'paper', glyph:'◍', wide:true, kick:'Good signs', title:"Curiosity about one's own physiology and an open mind are two of the traits that line up with a strong response to this kind of approach.", cta:'Continue' },
 		/* 40 */ { type:'single', tag:'Fit check', kick:'Mind & body', title:'How strongly do you believe in the mind-body connection?', options:['Completely','Strongly','Moderately','Slightly','Not at all'] },
 		/* 41 */ { type:'single', tag:'Fit check', kick:'The idea', title:'Does "training your nervous system like a muscle" make sense to you?', options:['Complete sense','A lot','Some','A little','None'] },
 		/* 42 */ { type:'slider', tag:'Fit check', kick:'Your role', title:'When it comes to your own health, do you see yourself as an active participant?', left:'Passive', right:'Very active', readout:['Passive','Mostly passive','In between','Active','Very active'] },
-		/* 43 */ { type:'info', tag:'Fit check', tone:'paper', glyph:'∿', wide:true, kick:'The one thing that matters most', title:'The people who get the most out of this treat it as a tool they\'re using, not something being done to them.', sub:"Showing up for the 15 minutes a day is the whole game.", cta:'Continue' },
+		/* 43 */ { type:'info', tag:'Fit check', tone:'paper', glyph:'∿', wide:true, kick:'The one thing that matters most', title:"The people who get the most out of this protocol want to take ownership over their health and treat this protocol as a tool they're using - not something being done to them.", cta:'Continue' },
 		/* 44 */ { type:'info', tag:'Last step', tone:'paper', glyph:'✓', kick:'Last step', title:'Just a little more before we get to your results.', cta:'Continue' },
 		/* 45 */ { type:'single', tag:'Last step', kick:'Evidence', title:'If a protocol had real published research behind it, how much would that matter?', options:['A lot, I trust facts and studies over wellness hype','Somewhat','A little','Not much'] },
 		/* 46 */ { type:'single', tag:'Last step', kick:'The commitment', title:'Is 15 minutes a day for 2 weeks an investment in yourself you\'re willing to make to improve this?', options:['Yes, absolutely','Yes, I think so',"I'm not sure",'Probably not'] },
-		/* 47 */ { type:'loader', tone:'dark', lines:['Analyzing your symptom pattern...','Scoring your IBS severity...','Mapping your gut-brain profile...','Checking your responder traits...','Matching you to the right protocol...','Building your personalized plan...'] },
+		/* 47 */ { type:'loader', tone:'dark', lines:['Analyzing your symptom pattern...','Scoring your IBS severity...','Mapping your gut-brain profile...','Checking your responder traits...','Calculating your protocol fit...','Building your personalized results...'] },
 		/* 48 */ { type:'email', tag:'Your results', tone:'paper', kick:'Your plan is ready', title:'Where should we send your personalized results?', sub:"You've spent the last few minutes building this. Pop in your email and we'll unlock your full results.", cta:'Show my results' }
 	];
 
@@ -259,8 +259,15 @@
 </script>
 
 <svelte:head>
-	<title>copables — The 60-second IBS quiz</title>
+	<title>60-Second IBS Quiz — Is the Copables Protocol Right for You?</title>
 	<meta name="description" content="A 60-second quiz that helps you understand what's going on with your gut — and whether the Copables 14-Day IBS Protocol is honestly right for you." />
+	<meta property="og:title" content="60-Second IBS Quiz — Is the Copables Protocol Right for You?" />
+	<meta property="og:description" content="Understand your gut symptoms in 60 seconds." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="60-Second IBS Quiz" />
+	<meta name="twitter:description" content="Understand your gut symptoms in 60 seconds." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
 </svelte:head>
 
 <div class="funnel" class:tone-dark={isDark}>
@@ -273,7 +280,7 @@
 				← Back
 			</button>
 			<a class="qbrand" href="/quiz/ibs" aria-label="Restart quiz" onclick={(e) => { e.preventDefault(); reset(); }}>
-				<img src="/assets/wordmark.png" alt="copables" />
+				<img src="/assets/wordmark.webp" alt="copables" />
 			</a>
 			<span class="qstep">{screen.tag ?? ''}</span>
 		</div>
@@ -335,7 +342,7 @@
 							<div class="scale-row" class:answered={scaleAns[k] !== undefined}>
 								<p class="scale-stmt">{stmt}</p>
 								<div class="scale-segs">
-									{#each (screen.scaleLabels || AGREE) as lbl, v (v)}
+									{#each (screen.scaleLabels || SCALE) as lbl, v (v)}
 										<button
 											class="scale-seg"
 											class:on={scaleAns[k] === v}
@@ -377,7 +384,7 @@
 				{:else if screen.type === 'info'}
 					<div class="qinfo">
 						{#if screen.face}
-							<img class="qface" src="/assets/face.png" alt="" />
+							<img class="qface" src="/assets/face.webp" alt="" />
 						{:else if screen.glyph}
 							<div class="qglyph">{screen.glyph}</div>
 						{/if}
@@ -473,7 +480,7 @@
 				<!-- ── EMAIL ──────────────────────────────────── -->
 				{:else if screen.type === 'email'}
 					<div class="qemail">
-						<img class="qface" src="/assets/face.png" alt="" />
+						<img class="qface" src="/assets/face.webp" alt="" />
 						{#if screen.kick}<p class="q-kick qinfo-eyebrow">{screen.kick}</p>{/if}
 						<h1 class="qh">{screen.title}</h1>
 						<p class="qsub">{screen.sub}</p>

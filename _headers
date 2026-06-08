@@ -1,0 +1,15 @@
+# Cloudflare Pages headers — long-cache static assets.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+# Content-hashed app bundle — safe to cache forever.
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Self-hosted fonts — stable filenames, effectively never change.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images — stable filenames; cache a year (no `immutable` so a cache purge
+# or rename can roll out a new asset if one is ever swapped in place).
+/assets/*
+  Cache-Control: public, max-age=31536000

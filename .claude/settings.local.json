@@ -38,7 +38,20 @@
       "Bash(tar xzf *)",
       "Bash(perl -pi -e 's{const buyUrl = data\\\\.products}{let buyUrl = $derived\\(data.products}; s{onlineStoreUrl \\\\?\\\\? '\\\\''/quiz/ibs'\\\\'';}{onlineStoreUrl ?? '\\\\''/quiz/ibs'\\\\''\\);}' src/routes/shop/__TRACKED_VAR__/+page.svelte)",
       "Bash(perl -pi -e 's/= \\\\\\(data\\\\.products/= \\\\$derived\\(data.products/' src/routes/shop/__TRACKED_VAR__/+page.svelte)",
-      "Bash(npx svelte-check *)"
+      "Bash(npx svelte-check *)",
+      "Bash(grep -E \"\\\\.\\(config|json|js|ts\\)$|svelte|vite|wrangler\")",
+      "Bash(magick identify *)",
+      "Bash(mkdir -p /tmp/webp-out)",
+      "Bash(cwebp -q 80 -alpha_q 90 -m 6 static/assets/brain.png -o /tmp/webp-out/brain.webp)",
+      "Bash(cwebp -q 80 -alpha_q 90 -m 6 -resize 800 0 static/assets/bottle.png -o /tmp/webp-out/bottle.webp)",
+      "Bash(ls -la .svelte-kit/output/client/_headers .svelte-kit/output/client/_routes.json)",
+      "Bash(cat .svelte-kit/output/client/_headers)",
+      "Bash(sed -n '1,25p' src/routes/quiz/ibs/+page.svelte)",
+      "Bash(sed -n '1,25p' src/routes/prelander/ibs/+page.svelte)",
+      "Bash(grep -vE \"DeprecationWarning|trace-deprecation|^$\")",
+      "Bash(grep -vE \"DeprecationWarning|trace-deprecation|Unused CSS|svelte.dev/e/css|^\\\\s*[0-9]+:|^\\\\s*\\\\^|^\\\\s*$\")",
+      "Bash(mv static/_headers ./_headers)",
+      "Bash(rm -rf .svelte-kit/output)"
     ]
   }
 }

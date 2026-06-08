@@ -28,8 +28,15 @@
 </script>
 
 <svelte:head>
-	<title>Blog — Copables</title>
-	<meta name="description" content="Learn more about placebos, Copables and modern health." />
+	<title>Blog — Placebo Science, Gut Health & Self-Healing | Copables</title>
+	<meta name="description" content="Read the latest on open-label placebo research, gut-brain connection, and evidence-based self-healing from the Copables team." />
+	<meta property="og:title" content="Blog — Placebo Science & Self-Healing" />
+	<meta property="og:description" content="Articles on open-label placebos, gut health, anxiety, PMS and the mind-body connection." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="Blog — Placebo Science & Self-Healing" />
+	<meta name="twitter:description" content="Articles on open-label placebos, gut health, anxiety, PMS and the mind-body connection." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
 </svelte:head>
 
 <div class="blog">

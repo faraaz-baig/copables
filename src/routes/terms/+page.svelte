@@ -5,7 +5,8 @@
 
 <svelte:head>
 	<title>Terms of Service — Copables</title>
-	<meta name="robots" content="noindex" />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="description" content="Copables Terms of Service." />
 </svelte:head>
 
 <main class="wrap legal-page">

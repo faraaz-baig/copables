@@ -39,11 +39,17 @@
 </script>
 
 <svelte:head>
-	<title>copables — Five evidence-based protocols for your own pharmacy</title>
-	<meta
-		name="description"
-		content="Copables is a platform of clinically-backed 14-day open-label placebo protocols that unlock your brain's own pharmacy — for IBS, anxiety, low mood, PMS, and fatigue."
-	/>
+	<title>Copables — Honest Placebo Protocols for IBS, Anxiety, PMS, Fatigue & Low Mood</title>
+	<meta name="description" content="Clinically-backed 14-day open-label placebo protocols. No deception, no side effects — just your brain's own pharmacy working for you." />
+	<meta property="og:title" content="Copables — Honest Placebo Protocols" />
+	<meta property="og:description" content="Clinically-backed 14-day protocols for IBS, anxiety, low mood, PMS and fatigue." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="Copables — Honest Placebo Protocols" />
+	<meta name="twitter:description" content="Clinically-backed 14-day protocols for IBS, anxiety, low mood, PMS and fatigue." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Copables","url":"https://copables.com","logo":"https://copables.com/assets/wordmark.webp","sameAs":["https://instagram.com/copables","https://x.com/copables","https://tiktok.com/@copables"],"description":"Five evidence-based open-label placebo protocols for IBS, anxiety, low mood, PMS and fatigue."}</script>`}
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Copables","url":"https://copables.com","potentialAction":{"@type":"SearchAction","target":"https://copables.com/shop?q={search_term_string}","query-input":"required name=search_term_string"}}</script>`}
 </svelte:head>
 
 <div class="homepage" id="top">
@@ -182,7 +188,7 @@
 						<a class="btn btn--primary" href="/science" onclick={() => trackCTA('science_evidence')}>See the Science <span class="arrow">→</span></a>
 					</div>
 					<div class="edit__media" style="background:#E8F0FE; display:grid; place-items:center; padding: 24px;">
-						<img src="/assets/brain.png" alt="Brain illustration" style="width:100%; max-width:920px; height:auto; display:block; mix-blend-mode: multiply;" />
+						<img src="/assets/brain.webp" alt="Brain illustration" width="1536" height="1024" loading="lazy" decoding="async" style="width:100%; max-width:920px; height:auto; display:block; mix-blend-mode: multiply;" />
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,8 @@
 
 <svelte:head>
 	<title>Cookie Policy — Copables</title>
-	<meta name="robots" content="noindex" />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="description" content="Copables Cookie Policy." />
 </svelte:head>
 
 <main class="wrap legal-page">

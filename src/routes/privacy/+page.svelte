@@ -5,7 +5,8 @@
 
 <svelte:head>
 	<title>Privacy Policy — Copables</title>
-	<meta name="robots" content="noindex" />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="description" content="Copables Privacy Policy." />
 </svelte:head>
 
 <main class="wrap legal-page">

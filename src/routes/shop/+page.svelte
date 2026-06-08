@@ -10,18 +10,26 @@
 	const fatigue = CONDITIONS.fatigue;     // N°5
 
 	const protocols = [
-		{ ...all,    handle: 'low-mood', slug: '/shop/low-mood', bottle: '/assets/bottle.png', desc: 'Rebuild the “things can get better” expectation that low mood erodes. Most members feel small lifts stack up across the first two weeks.' },
-		{ ...ibs,    handle: 'ibs',      slug: '/shop/ibs',      bottle: '/assets/bottle.png', desc: 'Calms the gut–brain conversation that drives cramping, bloating and urgency. Most members feel the loop loosen inside the first two weeks.' },
-		{ ...anxiety, handle: 'anxiety',  slug: '/shop/anxiety',  bottle: '/assets/bottle.png', desc: 'Settles the body’s alarm so the racing-thoughts loop has less to feed on. Most members feel their baseline drop inside the first two weeks.' },
-		{ ...pms,    handle: 'pms',      slug: '/shop/pms',      bottle: '/assets/bottle.png', desc: 'Eases the mood, cramping and irritability that crest in the luteal phase. Run it across the back half of your cycle, when symptoms peak.' },
-		{ ...fatigue, handle: 'fatigue',  slug: '/shop/fatigue',  bottle: '/assets/bottle.png', desc: 'A nervous-system reset for the energy regulation fatigue throws off. Most members feel steadier energy build across the first two weeks.' }
+		{ ...all,    handle: 'low-mood', slug: '/shop/low-mood', bottle: '/assets/bottle.webp', desc: 'Rebuild the “things can get better” expectation that low mood erodes. Most members feel small lifts stack up across the first two weeks.' },
+		{ ...ibs,    handle: 'ibs',      slug: '/shop/ibs',      bottle: '/assets/bottle.webp', desc: 'Calms the gut–brain conversation that drives cramping, bloating and urgency. Most members feel the loop loosen inside the first two weeks.' },
+		{ ...anxiety, handle: 'anxiety',  slug: '/shop/anxiety',  bottle: '/assets/bottle.webp', desc: 'Settles the body’s alarm so the racing-thoughts loop has less to feed on. Most members feel their baseline drop inside the first two weeks.' },
+		{ ...pms,    handle: 'pms',      slug: '/shop/pms',      bottle: '/assets/bottle.webp', desc: 'Eases the mood, cramping and irritability that crest in the luteal phase. Run it across the back half of your cycle, when symptoms peak.' },
+		{ ...fatigue, handle: 'fatigue',  slug: '/shop/fatigue',  bottle: '/assets/bottle.webp', desc: 'A nervous-system reset for the energy regulation fatigue throws off. Most members feel steadier energy build across the first two weeks.' }
 	];
 
 </script>
 
 <svelte:head>
-	<title>copables — Shop Protocols</title>
-	<meta name="description" content="Browse the Copables 14-day protocols: IBS, Anxiety, PMS, Fatigue and Low Mood. Open-label placebo treatments backed by research." />
+	<title>Shop — Copables Open-Label Placebo Protocols</title>
+	<meta name="description" content="Browse five evidence-based 14-day protocols for IBS, anxiety, low mood, PMS and fatigue. Clinically backed, no side effects, 90-day guarantee." />
+	<meta property="og:title" content="Shop — Copables Protocols" />
+	<meta property="og:description" content="Five evidence-based 14-day protocols for IBS, anxiety, low mood, PMS and fatigue." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="Shop — Copables Protocols" />
+	<meta name="twitter:description" content="Five evidence-based 14-day protocols for IBS, anxiety, low mood, PMS and fatigue." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[${protocols.map((p,i) => `{"@type":"ListItem","position":${i+1},"url":"https://copables.com${p.slug}","name":"${p.title.replace(/"/g,'\\"')}"}`).join(',')}]}</script>`}
 </svelte:head>
 
 <div class="shop-root">
@@ -35,7 +43,7 @@
 				<a class="pcard" href={p.slug} style="--c:{p.accent}; --c-deep:{p.accentDeep}; --c-tint:{p.accentTint}">
 					<div class="pcard__media">
 						<span class="pcard__badge">{p.no}</span>
-						<img src={p.bottle} alt="{p.title} — 30 gummies" loading="lazy" decoding="async" />
+						<img src={p.bottle} alt="{p.title} — 30 gummies" width="800" height="534" loading="lazy" decoding="async" />
 					</div>
 					<div class="pcard__body">
 						<span class="pcard__cat">{p.cat}</span>

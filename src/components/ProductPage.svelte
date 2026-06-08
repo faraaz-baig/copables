@@ -106,6 +106,15 @@
 <svelte:head>
 	<title>{c.metaTitle}</title>
 	<meta name="description" content={c.metaDesc} />
+	<meta property="og:title" content={c.metaTitle} />
+	<meta property="og:description" content={c.metaDesc} />
+	<meta property="og:type" content="product" />
+	<meta property="og:url" content="https://copables.com/shop/{c.handle}" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content={c.metaTitle} />
+	<meta name="twitter:description" content={c.metaDesc} />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
+	{@html `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"${c.title.replace(/"/g,'\\"')}","image":"https://copables.com/assets/lineup.webp","description":"${c.metaDesc.replace(/"/g,'\\"')}","brand":{"@type":"Brand","name":"Copables"},"offers":{"@type":"Offer","url":"https://copables.com/shop/${c.handle}","priceCurrency":"USD","price":"48.00","availability":"https://schema.org/PreOrder","itemCondition":"https://schema.org/NewCondition"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"${c.rating}","reviewCount":"${c.reviewCount.replace(/,/g,'')}"}}</script>`}
 </svelte:head>
 
 <div class="pdp-root" style="--c:{c.accent}; --c-deep:{c.accentDeep}; --c-tint:{c.accentTint}">

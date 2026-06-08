@@ -150,8 +150,15 @@
 </script>
 
 <svelte:head>
-	<title>copables — The 14-Day IBS Protocol</title>
+	<title>IBS Protocol — 14-Day Honest Placebo for Gut Relief | Copables</title>
 	<meta name="description" content="Yes, an honest placebo can quiet your gut. Take the 60-second quiz to see if the Copables 14-Day IBS Protocol can work for you." />
+	<meta property="og:title" content="IBS Protocol — 14-Day Honest Placebo for Gut Relief" />
+	<meta property="og:description" content="See if the Copables 14-Day IBS Protocol is right for you." />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://copables.com/assets/lineup.webp" />
+	<meta name="twitter:title" content="IBS Protocol — 14-Day Honest Placebo for Gut Relief" />
+	<meta name="twitter:description" content="See if the Copables 14-Day IBS Protocol is right for you." />
+	<meta name="twitter:image" content="https://copables.com/assets/lineup.webp" />
 </svelte:head>
 
 <div class="prelander-page">
