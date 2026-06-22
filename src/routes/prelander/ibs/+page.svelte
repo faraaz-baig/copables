@@ -140,7 +140,7 @@
 		<div class="hero-grid">
 			<div class="reveal">
 				<p class="eyebrow">The 4-minute IBS assessment</p>
-				<h1 class="h1">An <span class="ital u-accent">honest</span> placebo, built around your IBS.</h1>
+				<h1 class="h1">An <span class="u-accent">honest</span> placebo, built around your IBS.</h1>
 				<p class="lead" style="margin-top:22px">A 14-day at-home protocol that pairs open-label placebos with daily CBT to calm an overactive gut-brain connection. No medications, no restrictive diets, no doctor's office.</p>
 				<ul class="hero-checks">
 					<li><span class="ck">✓</span> Built on two decades of research from Harvard Medical School</li>
@@ -182,7 +182,7 @@
 		<div class="split">
 			<div class="reveal">
 				<p class="eyebrow">The root cause</p>
-				<h2 class="h2">Your gut isn't broken. It's <span class="ital u-accent">misunderstood</span>.</h2>
+				<h2 class="h2">Your gut isn't broken. It's <span class="u-accent">misunderstood</span>.</h2>
 				<p class="lead" style="margin-top:20px">IBS is a problem of gut-brain communication, not a defect in your gut. When that connection gets noisy, normal signals get amplified into pain and urgency. Copables is designed to help quiet that channel.</p>
 			</div>
 			<div class="gutbrain reveal">
@@ -208,7 +208,7 @@
 	<div class="wrap">
 		<div class="center measure mx-auto reveal" style="margin-bottom:40px">
 			<p class="eyebrow" style="justify-content:center">Tried everything?</p>
-			<h2 class="h2">In a landmark 2010 Harvard trial, 70% more IBS patients reported relief from an <span class="ital u-accent">honest</span> placebo.</h2>
+			<h2 class="h2">In a landmark 2010 Harvard trial, 70% more IBS patients reported relief from an <span class="u-accent">honest</span> placebo.</h2>
 			<p class="lead" style="margin-top:22px">It wasn't a one-off. In 2021 the same Harvard lab ran the trial again with 262 patients, more than triple the original, and the result held. This time they also compared the honest placebo to a concealed one, the kind you don't know you're taking. The two worked equally well. Knowing it was a placebo didn't weaken the effect.</p>
 		</div>
 
@@ -220,11 +220,11 @@
 
 		<div class="cite-grid">
 			<article class="cite-card reveal">
-				<p class="cite-text">Kaptchuk T.J. et al (2010). "Placebos without Deception: A Randomized Controlled Trial in Irritable Bowel Syndrome." <em>PLoS ONE</em> 5(12):e15591.</p>
+				<p class="cite-text">Kaptchuk T.J. et al (2010). "Placebos without Deception: A Randomized Controlled Trial in Irritable Bowel Syndrome." PLoS ONE 5(12):e15591.</p>
 				<a class="cite-link" href={KAPTCHUK_2010} target="_blank" rel="noopener noreferrer">View study →</a>
 			</article>
 			<article class="cite-card reveal">
-				<p class="cite-text">Lembo A. et al (2021). "Open-label placebo vs double-blind placebo for irritable bowel syndrome: a randomized clinical trial." <em>PAIN</em> 162(9):2428-2435.</p>
+				<p class="cite-text">Lembo A. et al (2021). "Open-label placebo vs double-blind placebo for irritable bowel syndrome: a randomized clinical trial." PAIN 162(9):2428-2435.</p>
 				<a class="cite-link" href={LEMBO_2021} target="_blank" rel="noopener noreferrer">View study →</a>
 			</article>
 		</div>
@@ -490,7 +490,7 @@
 h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .h1 { font-size: clamp(44px,7.5vw,92px); line-height:0.95; letter-spacing:-0.035em; }
 .h2 { font-size: clamp(38px,5.5vw,68px); line-height:0.97; letter-spacing:-0.04em; }
-.ital { font-style:italic; font-weight:800; }
+.ital { font-weight:800; }
 .u-accent { color: var(--accent-deep); }
 .squig { position: relative; white-space: nowrap; }
 .squig svg { position: absolute; left: -2%; bottom: -0.12em; width: 104%; height: 0.32em; overflow: visible; }
@@ -607,7 +607,7 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 
 /* ── Copables isn't right for everyone (redesigned) ── */
 .fit-wrap { max-width:860px; }
-.fit__under { position:relative; color:var(--accent-deep); font-style:italic; font-weight:800; }
+.fit__under { position:relative; color:var(--accent-deep); font-weight:800; }
 .fit__under::after {
 	content:""; position:absolute; left:-2px; right:-2px; bottom:-2px; height:8px;
 	background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 Q 15 1, 30 4 T 60 5 T 90 4 T 118 5' stroke='%232F95F2' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
