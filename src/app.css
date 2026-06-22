@@ -53,6 +53,8 @@
   --orange-tint: #FBE8CE;
   --wine:        #8A2433;
   --green-ok:    #2E9E6B;
+  --green-deep:  #1E7A50;
+  --green-tint:  #E7F7EF;
 
   /* live accent (defaults to blue; pages can override) */
   --accent:      var(--blue);

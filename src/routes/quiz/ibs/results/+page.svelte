@@ -18,7 +18,7 @@
 		if (score >= 72) return { label: 'Strong fit', body: 'Your answers line up well with the traits that predict a strong response to an open-label placebo protocol.' };
 		if (score >= 55) return { label: 'Good fit', body: 'Most of your answers point toward a good response. The daily ritual and CBT-style cards should land well.' };
 		if (score >= 40) return { label: 'Moderate fit', body: 'You show some of the responder traits, but it may take a little longer for the protocol to feel natural.' };
-		return { label: 'Likely not a fit', body: 'Based on your answers, this approach is less likely to feel credible or useful to you right now. That is honest data too.' };
+		return { label: 'Cautious fit', body: 'You are understandably guarded after everything you have tried. The protocol asks for openness, not certainty.' };
 	}
 
 	function buy(label: string) {
@@ -35,17 +35,18 @@
 
 	let score = $derived(results?.sss ?? 0);
 	let band = $derived(sssBand(score));
-	let fit = $derived(results?.fit ?? { score: 0, verdict: '' });
+	let fit = $derived(results?.fit ?? { score: 0, tier: '', personal: '' });
 	let fitCopyOut = $derived(fitCopy(fit.score));
-	let alarm = $derived(results?.alarmLevel ?? { label: '', pct: 0 });
-	let safetyYes = $derived(results?.safety === 'Yes, one or more apply');
+	let safetyYes = $derived(results?.safety === true);
 	const BAND_CHARGE: Record<string, string> = { mild: 'var(--green-ok)', moderate: 'var(--orange)', severe: 'var(--wine)' };
 	let chargeColor = $derived(BAND_CHARGE[band.tone] ?? 'var(--accent)');
 	let markerPct = $derived(Math.min(100, (Math.min(500, score) / 500) * 100));
 	let scoreState = $state(0);
 	let markerState = $state(0);
-	let responderType = $derived(results?.responderType ?? null);
-	let proj = $derived(results?.projection ?? null);
+	let projScore = $derived(Math.max(0, score - 50));
+	let projBand = $derived(sssBand(projScore));
+	let goalArr = $derived(Array.isArray(results?.goal) ? results.goal : []);
+	let goalText = $derived(goalArr.length && goalArr[0] !== "I haven't figured that out yet" ? goalArr[0].toLowerCase() : '');
 
 	// Editorial score count-up + marker slide
 	$effect(() => {
@@ -118,34 +119,28 @@
 				<p class="rsub">The IBS-SSS is a validated 0–500 severity scale. A higher number means a bigger daily impact. This score is the same one used in the Harvard open-label placebo trials.</p>
 			</section>
 
-			<!-- ── Responder type ─────────────────────────────── -->
-			{#if responderType}
-				<section class="rcard rtype">
-					<p class="q-kick">Your responder profile</p>
-					<div class="type-stamp"><span class="type-name">{responderType.name}</span></div>
-					<h2 class="rh">{responderType.title}</h2>
-					<p class="rsub">{responderType.body}</p>
-				</section>
-			{/if}
-
 			<!-- ── Projection ─────────────────────────────────── -->
-			{#if proj && !safetyYes}
+			{#if !safetyYes}
 				<section class="rcard proj">
 					<p class="q-kick">Your projection</p>
 					<h2 class="rh">Where your score could land after 14 days.</h2>
 					<div class="proj-display">
-						<div class="proj-current">
-							<span class="proj-label">Today</span>
-							<span class="proj-num">{score}</span>
-						</div>
+						<div class="proj-current"><span class="proj-label">Today</span><span class="proj-num">{score}</span></div>
 						<span class="proj-arrow">→</span>
-						<div class="proj-future">
-							<span class="proj-label">After 14 days</span>
-							<span class="proj-num proj-range">{proj.high}–{proj.low}</span>
-						</div>
+						<div class="proj-future"><span class="proj-label">After 14 days</span><span class="proj-num proj-range">~{projScore}</span></div>
 					</div>
-					<p class="rsub">As {responderType?.name ?? 'a responder'}, you're projected toward a {proj.pctLow}–{proj.pctHigh}% drop. That's the average improvement seen in responders in the published research.</p>
-					<p class="proj-disclaim">Projection based on average improvement in responders in published research (Kaptchuk 2021: IBS-SSS fell ~37%). Individual results vary and aren't guaranteed.</p>
+					<p class="rsub">In published open-label trials, 69% of participants saw their IBS-SSS drop by 50+ points. A 50-point drop puts you around {projScore} — from {band.label} to {projBand.label}.{#if goalText} And you told us you wanted to {goalText} — this is the path there.{/if}</p>
+					<p class="proj-disclaim">Based on published open-label trials; individual results vary and aren't guaranteed.</p>
+				</section>
+			{/if}
+
+			<!-- ── The ceiling (life-altering finale) ─────────── -->
+			{#if !safetyYes}
+				<section class="rcard ceiling">
+					<p class="q-kick">For people like you</p>
+					<div class="ceiling-stat">1 in 4</div>
+					<h2 class="rh">saw a 150+ point drop — a shift considered life-altering.</h2>
+					<p class="rsub">Based on your responder profile, you're in the group most likely to land there.{#if goalText} That's the {goalText} you told us you wanted.{/if}</p>
 				</section>
 			{/if}
 
@@ -167,7 +162,7 @@
 					<span class="fit-of">/ 100</span>
 				</div>
 				<h2 class="rh">{fitCopyOut.label}</h2>
-				<p class="rsub">{fitCopyOut.body} This score is derived from your flare reaction, anticipatory sensitivity, and the fit-check statements — openness, curiosity, active role, and nervous-system retraining.</p>
+				<p class="rsub">{fit.personal || fitCopyOut.body} This score is derived from your openness, curiosity, active role, nervous-system belief, and catastrophizing level.</p>
 			</section>
 
 			<!-- ── Research proof (heavy artillery for conversion) ─ -->
@@ -290,6 +285,9 @@
 .proj-range { color:var(--accent-deep); }
 .proj-arrow { font-size:36px; font-weight:900; color:var(--ink-soft); }
 .proj-disclaim { font-size:11.5px; font-weight:600; color:var(--ink-soft); line-height:1.45; margin:14px 0 0; opacity:.75; max-width:48ch; margin-left:auto; margin-right:auto; }
+
+/* ceiling */
+.ceiling-stat { font-size:clamp(52px,10vw,72px); font-weight:900; letter-spacing:-0.04em; line-height:.9; color:var(--accent-deep); margin:10px 0 16px; }
 
 /* safety */
 .safety { background: #fff8f0; border-color: var(--orange); }

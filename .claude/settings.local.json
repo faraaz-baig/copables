@@ -51,7 +51,8 @@
       "Bash(grep -vE \"DeprecationWarning|trace-deprecation|^$\")",
       "Bash(grep -vE \"DeprecationWarning|trace-deprecation|Unused CSS|svelte.dev/e/css|^\\\\s*[0-9]+:|^\\\\s*\\\\^|^\\\\s*$\")",
       "Bash(mv static/_headers ./_headers)",
-      "Bash(rm -rf .svelte-kit/output)"
+      "Bash(rm -rf .svelte-kit/output)",
+      "Bash(node -e \"const s=require\\('./package.json'\\).scripts; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")"
     ]
   }
 }
