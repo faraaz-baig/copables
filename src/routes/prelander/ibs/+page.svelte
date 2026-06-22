@@ -60,6 +60,28 @@
 	/* ── Citations ────────────────────────────────────── */
 	const KAPTCHUK_2010 = 'https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015591';
 	const LEMBO_2021 = 'https://journals.lww.com/pain/abstract/2021/09000/open_label_placebo_vs_double_blind_placebo_for.13.aspx';
+
+	/* ── Kit photo carousel ──────────────────────────── */
+	const kitSlides = [
+		{ src: '/assets/kit.webp', alt: 'The complete Copables 14-day IBS protocol kit laid out', cap: 'Everything in your 14-day box.', badge: '14-DAY PROTOCOL', badgeClass: 'kit-badge--wine' },
+		{ src: '/assets/ibs-bottle.webp', alt: 'The OLP gummies jar, 30 open-label placebo gummies', cap: 'The OLP gummies, 30 per jar.', badge: '2 A DAY', badgeClass: 'kit-badge--blue' },
+		{ src: '/assets/ritual-cards.webp', alt: 'Daily CBT cards fanned out with a pen', cap: 'Daily CBT cards, one per day.', badge: 'WRITE BY HAND', badgeClass: 'kit-badge--orange' },
+	];
+	let kitIndex = $state(0);
+	let kitPaused = $state(false);
+
+	function kitGo(i: number) {
+		kitIndex = ((i % kitSlides.length) + kitSlides.length) % kitSlides.length;
+	}
+	function kitNext() { kitGo(kitIndex + 1); }
+	function kitPrev() { kitGo(kitIndex - 1); }
+
+	$effect(() => {
+		if (kitPaused) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const t = setInterval(() => { kitIndex = (kitIndex + 1) % kitSlides.length; }, 5000);
+		return () => clearInterval(t);
+	});
 </script>
 
 <svelte:head>
@@ -76,10 +98,25 @@
 
 <div class="prelander-page">
 
-<!-- ── ANNOUNCEMENT BAR ─────────────────────────────── -->
-<div class="offer">
-	Built on two decades of research from Harvard&nbsp;·&nbsp;
-	<b>14-day IBS protocol</b>&nbsp;·&nbsp;<b>Money-back guarantee</b>
+<!-- chalk roughen filter (document-wide) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+	<filter id="chalk" x="-20%" y="-20%" width="140%" height="140%">
+		<feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
+		<feDisplacementMap in="SourceGraphic" in2="n" scale="3.4" xChannelSelector="R" yChannelSelector="G" />
+	</filter>
+</defs></svg>
+
+<!-- ── ANNOUNCEMENT BAR (rotating ticker) ───────────── -->
+<div class="offer" role="region" aria-label="Announcements">
+	<div class="offer__viewport">
+		<div class="offer__track">
+			<span class="offer__item"><b>Free shipping</b> on every order</span>
+			<span class="offer__item"><b>Money-back guarantee</b> if it doesn't work</span>
+			<span class="offer__item"><b>14-day protocol</b> built around your IBS</span>
+			<span class="offer__item"><b>Backed by Harvard</b> research</span>
+			<span class="offer__item" aria-hidden="true"><b>Free shipping</b> on every order</span>
+		</div>
+	</div>
 </div>
 
 <!-- ── NAVBAR ───────────────────────────────────────── -->
@@ -197,44 +234,103 @@
 <!-- ── WHAT'S IN THE KIT ────────────────────────────── -->
 <section class="section">
 	<div class="wrap">
-		<div class="center measure mx-auto reveal" style="margin-bottom:40px">
-			<h2 class="h2">It's not just a pill.</h2>
-			<p class="lead" style="margin-top:18px">On its own, a placebo is just a capsule. What makes Copables work is the system around it: the gummies, the daily cards, the app, the tracker, and the pen. Here's everything in the box.</p>
+		<div class="center measure mx-auto reveal" style="margin-bottom:44px">
+			<p class="eyebrow">What's in the box</p>
+			<h2 class="h2">It's not just a <span class="squig">pill<svg viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M3 8 C 40 2, 70 12, 100 6 S 165 2, 197 7" filter="url(#chalk)" /></svg></span>.</h2>
+			<p class="lead" style="margin-top:18px">On its own, a placebo is just a capsule. What makes Copables work is the system around it. Here's everything in the box.</p>
 		</div>
 
-		<div class="kit-full reveal">
-			<div class="brand-img kit-full__img">
-				<img src="/assets/kit.webp" alt="The complete Copables 14-day IBS protocol kit laid out" loading="lazy" />
+		<div class="kit-cols">
+			<div class="kit-cols__photo reveal">
+				<div class="kit-carousel" role="region" aria-label="Kit photos"
+					onmouseenter={() => kitPaused = true}
+					onmouseleave={() => kitPaused = false}
+					onfocusin={() => kitPaused = true}
+					onfocusout={() => kitPaused = false}
+				>
+					<div class="kit-stage">
+						<div class="kit-carousel__viewport brand-img kit-full__img">
+							{#each kitSlides as slide, i}
+								<figure class="kit-slide" class:active={i === kitIndex}>
+									<img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} aria-hidden={i !== kitIndex} />
+									<span class="kit-badge {slide.badgeClass}">{slide.badge}</span>
+								</figure>
+							{/each}
+						</div>
+						<button class="kit-arrow kit-arrow--prev" onclick={kitPrev} aria-label="Previous photo">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+						</button>
+						<button class="kit-arrow kit-arrow--next" onclick={kitNext} aria-label="Next photo">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+						</button>
+					</div>
+					<p class="kit-full__cap">{kitSlides[kitIndex].cap}</p>
+					<div class="kit-dots" role="tablist" aria-label="Kit photos">
+						{#each kitSlides as slide, i}
+							<button class="kit-dot" class:active={i === kitIndex}
+								onclick={() => kitGo(i)}
+								aria-label={`Photo ${i + 1} of ${kitSlides.length}`}
+								aria-selected={i === kitIndex}
+								role="tab"
+							></button>
+						{/each}
+					</div>
+				</div>
 			</div>
-			<p class="kit-full__cap">Everything that comes in your 14-day box.</p>
-		</div>
 
-		<div class="kit-tiles">
-			<article class="ktile reveal">
-				<div class="ktile__img ph" data-label="The OLP gummies: jar + gummies"></div>
-				<h3>The OLP gummies</h3>
-				<p>30 open-label placebo gummies. Two a day, before breakfast. You know they're placebos. That's the point.</p>
-			</article>
-			<article class="ktile reveal">
-				<div class="ktile__img ph" data-label="Daily CBT cards: a fanned stack"></div>
-				<h3>Daily CBT cards</h3>
-				<p>Fourteen daily cards. Each one runs you through a short, science-backed exercise to retrain how your brain reads gut signals.</p>
-			</article>
-			<article class="ktile reveal">
-				<div class="ktile__img ph" data-label="The pen resting on a card"></div>
-				<h3>The pen</h3>
-				<p>A pen, because doing the exercise by hand is part of how the protocol works. Physical, not just tapping a screen.</p>
-			</article>
-			<article class="ktile reveal">
-				<div class="ktile__img ph" data-label="The 14-day accountability tracker"></div>
-				<h3>The accountability tracker</h3>
-				<p>A 14-day tracker. Mark off each day you complete. The streak does more work than you'd expect.</p>
-			</article>
-			<article class="ktile ktile--app reveal">
-				<div class="ktile__img ph" data-label="The Copables app: daily lesson / scan-a-card"></div>
-				<h3>The Copables app</h3>
-				<p>The guided app walks you through each day's CBT lesson, and scans your card to give you feedback on the exercise. Write on a card, scan it in, close the loop.</p>
-			</article>
+			<div class="kit-cols__list reveal">
+				<p class="eyebrow">What's inside</p>
+
+				<div class="kit-row">
+					<span class="kit-row__icon tint-blue">
+						<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9h10v3H19z"/><path d="M20 12v2M28 12v2"/><path d="M17 14h14a3 3 0 0 1 3 3v19a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V17a3 3 0 0 1 3-3z"/><path d="M15 25h18M15 30h18"/></svg>
+					</span>
+					<div>
+						<h3>The OLP gummies</h3>
+						<p>30 open-label placebo gummies. Two a day, before breakfast. You know they're placebos. That's the point.</p>
+					</div>
+				</div>
+
+				<div class="kit-row">
+					<span class="kit-row__icon tint-orange">
+						<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="15" width="20" height="24" rx="2.5" transform="rotate(-7 24 27)"/><rect x="14" y="13" width="20" height="24" rx="2.5" transform="rotate(5 24 25)"/><path d="M18 20h12M18 24h12M18 28h8" transform="rotate(5 24 25)"/></svg>
+					</span>
+					<div>
+						<h3>Daily CBT cards</h3>
+						<p>Fourteen daily cards, each a short science-backed exercise to retrain how your brain reads gut signals.</p>
+					</div>
+				</div>
+
+				<div class="kit-row">
+					<span class="kit-row__icon tint-blue">
+						<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 36L34 18"/><path d="M16 36l-2 5 5-2z"/><path d="M34 18l4-4"/></svg>
+					</span>
+					<div>
+						<h3>The pen</h3>
+						<p>Because doing the exercise by hand is part of how the protocol works. Physical, not just tapping a screen.</p>
+					</div>
+				</div>
+
+				<div class="kit-row">
+					<span class="kit-row__icon tint-orange">
+						<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="13" width="28" height="26" rx="2.5"/><path d="M10 19h28"/><path d="M17 10v4M24 10v4M31 10v4"/><path d="M16 24l2 2 3-4M24 24l2 2 3-4M32 24l2 2 3-4M16 32l2 2 3-4M24 32l2 2 3-4"/></svg>
+					</span>
+					<div>
+						<h3>The accountability tracker</h3>
+						<p>A 14-day tracker. Mark off each day. The streak does more work than you'd expect.</p>
+					</div>
+				</div>
+
+				<div class="kit-row">
+					<span class="kit-row__icon tint-blue">
+						<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="8" width="16" height="32" rx="3"/><path d="M21 12h6"/><path d="M19 17h10M19 21h10M19 25h7"/><circle cx="29" cy="31" r="3"/><path d="M21 36h6"/></svg>
+					</span>
+					<div>
+						<h3>The Copables app</h3>
+						<p>Walks you through each day's CBT lesson, and scans your card to give you feedback on the exercise.</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -311,6 +407,7 @@
 
 <!-- ── FOUR STEPS (Nerva-style timeline) ───────────── -->
 <section class="section" id="stepsSection">
+	<hr class="band-rule" />
 	<div class="wrap">
 		<div class="steps-layout">
 			<div class="steps-intro reveal">
@@ -395,6 +492,9 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .h2 { font-size: clamp(38px,5.5vw,68px); line-height:0.97; letter-spacing:-0.04em; }
 .ital { font-style:italic; font-weight:800; }
 .u-accent { color: var(--accent-deep); }
+.squig { position: relative; white-space: nowrap; }
+.squig svg { position: absolute; left: -2%; bottom: -0.12em; width: 104%; height: 0.32em; overflow: visible; }
+.squig svg path { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; }
 .lead { font-size: clamp(18px,1.6vw,22px); color:var(--ink-soft); line-height:1.55; }
 .tiny { font-size:13.5px; line-height:1.5; color:var(--ink-soft); }
 
@@ -416,12 +516,36 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .btn .arrow { font-size:1.15em; line-height:0; transform:translateY(1px); }
 .cta-note { margin-top:14px; font-size:14px; color:var(--ink-soft); display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
 
-/* ── Offer strip ─────────────────────────────────── */
+/* ── Offer strip (rotating ticker) ───────────────── */
 .offer {
-	background:var(--ink); color:var(--paper); text-align:center;
-	font-size:14px; font-weight:600; padding:9px 16px; letter-spacing:-0.01em;
+	--offer-h: 40px;
+	background:var(--ink); color:var(--paper);
+	font-size:14px; font-weight:600; letter-spacing:-0.01em;
+}
+.offer__viewport { height:var(--offer-h); overflow:hidden; }
+.offer__track { display:flex; flex-direction:column; will-change:transform; animation:offer-roll 16s infinite; }
+.offer__item {
+	flex:none; height:var(--offer-h); line-height:var(--offer-h);
+	padding:0 16px; text-align:center; white-space:nowrap;
 }
 .offer :global(b) { color:var(--orange); font-weight:800; }
+
+/* Swipe-up roll: hold each message, then ease up to the next. 4 messages + a
+   clone of the first at the end so the reset from -4h back to 0 is seamless. */
+@keyframes offer-roll {
+	0%,   22%  { transform:translateY(0);                            animation-timing-function:cubic-bezier(.65,0,.35,1); }
+	25%,  47%  { transform:translateY(calc(var(--offer-h) * -1));    animation-timing-function:cubic-bezier(.65,0,.35,1); }
+	50%,  72%  { transform:translateY(calc(var(--offer-h) * -2));    animation-timing-function:cubic-bezier(.65,0,.35,1); }
+	75%,  97%  { transform:translateY(calc(var(--offer-h) * -3));    animation-timing-function:cubic-bezier(.65,0,.35,1); }
+	100%       { transform:translateY(calc(var(--offer-h) * -4)); }
+}
+@media (prefers-reduced-motion:reduce) {
+	.offer__track { animation:none; }
+}
+@media (max-width:560px) {
+	.offer { --offer-h:36px; font-size:12.5px; }
+	.offer__item { padding:0 12px; }
+}
 
 /* ── Header ──────────────────────────────────────── */
 .header {
@@ -575,23 +699,63 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .loop .a4 { bottom:18%; left:18%; transform:rotate(45deg); }
 
 /* ── What's in the kit ───────────────────────────── */
-.kit-full { max-width:760px; margin:0 auto 44px; }
-.kit-full__img { aspect-ratio:16/9; border-radius:var(--frame-radius-lg); }
-.kit-full__img img { width:100%; height:100%; object-fit:cover; }
-.kit-full__cap { text-align:center; margin:14px 0 0; font-size:14px; font-weight:700; color:var(--ink-soft); }
-.kit-tiles { display:grid; grid-template-columns:1fr; gap:24px; }
-@media (min-width:560px) { .kit-tiles { grid-template-columns:repeat(2,1fr); } }
-@media (min-width:940px) { .kit-tiles { grid-template-columns:repeat(3,1fr); } }
-.ktile { display:flex; flex-direction:column; }
-.ktile__img { aspect-ratio:1/1; border-radius:var(--frame-radius); border:var(--frame-bw) solid var(--frame-ink); box-shadow:var(--frame-shadow-sm); overflow:hidden; margin-bottom:16px; }
-.ktile h3 { font-size:19px; margin:0 0 8px; }
-.ktile p { margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft); }
-@media (min-width:940px) {
-	.ktile--app { grid-column:span 2; }
-	.ktile--app .ktile__img { aspect-ratio:16/9; }
+.kit-cols { display:grid; grid-template-columns:1fr; gap:36px; }
+@media (min-width:820px) {
+	.kit-cols { grid-template-columns:52fr 48fr; gap:56px; align-items:start; }
+	.kit-cols__photo { position:sticky; top:96px; }
+}
+.kit-carousel { position:relative; }
+/* wraps the image only, so the arrows anchor to the photo's corner, not the
+   full carousel (which also holds the caption + dots below). */
+.kit-stage { position:relative; }
+.kit-carousel__viewport { position:relative; aspect-ratio:4/5; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--frame-shadow-sm); }
+.kit-slide { position:absolute; inset:0; margin:0; opacity:0; transition:opacity 400ms ease; }
+.kit-slide.active { opacity:1; }
+.kit-slide img { width:100%; height:100%; object-fit:cover; }
+.kit-badge {
+	position:absolute; top:16px; left:16px; z-index:3;
+	display:inline-block; padding:8px 16px; border-radius:999px;
+	font-family:var(--ff); font-weight:800; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+	color:#fff; box-shadow:var(--frame-shadow-sm); transform:rotate(-4deg); white-space:nowrap;
+}
+.kit-badge--wine { background:var(--wine); }
+.kit-badge--blue { background:var(--blue); }
+.kit-badge--orange { background:var(--orange); }
+.kit-arrow {
+	position:absolute; bottom:20px;
+	width:48px; height:48px; border-radius:999px;
+	background:var(--card); border:2px solid var(--frame-ink);
+	box-shadow:var(--frame-shadow-sm);
+	display:flex; align-items:center; justify-content:center;
+	color:var(--ink); cursor:pointer; z-index:3;
+	transition: transform .15s ease, box-shadow .15s ease;
+}
+.kit-arrow:hover { box-shadow:8px 8px 0 0 rgba(20,19,15,.14); transform:translateY(-2px); }
+.kit-arrow:active { transform:translateY(0); }
+.kit-arrow svg { width:20px; height:20px; }
+.kit-arrow--prev { right:80px; }
+.kit-arrow--next { right:20px; }
+.kit-full__cap { text-align:center; margin:14px 0 10px; font-size:13.5px; font-weight:700; color:var(--ink-soft); font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+.kit-dots { display:flex; justify-content:center; gap:8px; }
+.kit-dot { width:8px; height:8px; border-radius:999px; border:none; background:var(--ink); opacity:0.2; cursor:pointer; padding:0; transition: background .2s ease, opacity .2s ease, transform .15s ease; }
+.kit-dot:hover { transform:scale(1.2); }
+.kit-dot.active { background:var(--accent); opacity:1; }
+.kit-cols__list .eyebrow { margin-bottom:6px; }
+.kit-row { display:flex; gap:18px; padding:18px 0; border-bottom:1px solid var(--line); align-items:flex-start; }
+.kit-row:first-of-type { border-top:1px solid var(--line); }
+.kit-row__icon { flex:0 0 44px; width:44px; height:44px; color:var(--ink); display:inline-flex; align-items:center; justify-content:center; border-radius:999px; transition: color .2s ease; }
+.kit-row__icon.tint-blue { background:var(--blue-tint); color:var(--blue-deep); }
+.kit-row__icon.tint-orange { background:var(--orange-tint); color:var(--orange-deep); }
+.kit-row__icon svg { width:26px; height:26px; }
+.kit-row h3 { font-size:18px; margin:0 0 4px; font-weight:800; letter-spacing:-0.02em; line-height:1.1; }
+.kit-row p { margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft); }
+@media (max-width:819px) {
+	.kit-carousel { max-width:560px; margin:0 auto; }
+	.kit-carousel__viewport { aspect-ratio:16/10; }
 }
 
 /* ── Steps (Nerva-style timeline) ─────────────────── */
+.band-rule { border:0; border-top:2px solid var(--ink); margin:0 0 clamp(56px, 8vw, 110px); width:100%; }
 .steps-layout { display:grid; grid-template-columns:1fr; gap:32px; }
 @media (min-width:900px) {
 	.steps-layout { grid-template-columns:minmax(280px,340px) 1fr; gap:64px; align-items:start; }
