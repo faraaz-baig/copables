@@ -37,7 +37,24 @@
 		}, { threshold: 0.6 });
 		document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
 
-		return () => { revealIO.disconnect(); countIO.disconnect(); };
+		// timeline line: connect center of first marker to center of last marker
+		function setTimelineLine() {
+			const timeline = document.querySelector('.steps-timeline') as HTMLElement | null;
+			if (!timeline) return;
+			const markers = timeline.querySelectorAll('.step__marker');
+			if (markers.length < 2) return;
+			const tRect = timeline.getBoundingClientRect();
+			const first = markers[0].getBoundingClientRect();
+			const last = markers[markers.length - 1].getBoundingClientRect();
+			const top = first.top + first.height / 2 - tRect.top;
+			const bottom = tRect.bottom - (last.top + last.height / 2);
+			timeline.style.setProperty('--line-top', `${top}px`);
+			timeline.style.setProperty('--line-bottom', `${bottom}px`);
+		}
+		setTimelineLine();
+		window.addEventListener('resize', setTimelineLine);
+
+		return () => { revealIO.disconnect(); countIO.disconnect(); window.removeEventListener('resize', setTimelineLine); };
 	});
 
 	/* ── Citations ────────────────────────────────────── */
@@ -292,45 +309,45 @@
 	</div>
 </section>
 
-<!-- ── FOUR STEPS (static CTA, image per step) ─────── -->
+<!-- ── FOUR STEPS (Nerva-style timeline) ───────────── -->
 <section class="section" id="stepsSection">
 	<div class="wrap">
-		<div class="center reveal" style="margin-bottom:14px">
-			<p class="eyebrow" style="justify-content:center">How it works</p>
-			<h2 class="h2">Four steps to feeling better.</h2>
-		</div>
-		<div class="steps">
-			<div class="step reveal">
-				<span class="n">1</span>
-				<div class="step__content">
-					<div class="step__img ph" data-label="step-1: assessment / quiz screen mock"></div>
-					<div class="step__text"><h3>Take the 4-minute assessment</h3><p>Copables isn't right for everyone. A short set of questions about you and your symptoms checks if you're a good fit.</p></div>
+		<div class="steps-layout">
+			<div class="steps-intro reveal">
+				<p class="eyebrow">How it works</p>
+				<h2 class="h2">Four steps to feeling better.</h2>
+				<a class="btn btn--primary btn--lg" href="/quiz/ibs" onclick={() => ctaClick('steps')}>Start the assessment <span class="arrow">→</span></a>
+			</div>
+			<div class="steps-timeline">
+				<div class="step reveal">
+					<div class="step__marker"><span class="n">1</span></div>
+					<div class="step__body">
+						<div class="step__text"><h3>Take the 4-minute assessment</h3><p>Copables isn't right for everyone. A short set of questions about you and your symptoms checks if you're a good fit.</p></div>
+						<div class="step__img ph" data-label="step-1: assessment / quiz screen mock"></div>
+					</div>
+				</div>
+				<div class="step reveal">
+					<div class="step__marker"><span class="n">2</span></div>
+					<div class="step__body">
+						<div class="step__text"><h3>Your 14-day kit arrives</h3><p>One OLP-2 protocol box: 30 gummies, your set of daily cards, a 14-day tracker, a pen, and access to the guided app.</p></div>
+						<div class="step__img ph" data-label="step-2: the kit / box photo"></div>
+					</div>
+				</div>
+				<div class="step reveal">
+					<div class="step__marker"><span class="n">3</span></div>
+					<div class="step__body">
+						<div class="step__text"><h3>Fifteen minutes a day</h3><p>Each day the app walks you through a 3-step, science-backed protocol that includes physical handwriting to help rewire your thoughts.</p></div>
+						<div class="step__img ph" data-label="step-3: app + handwritten card"></div>
+					</div>
+				</div>
+				<div class="step reveal">
+					<div class="step__marker"><span class="n">4</span></div>
+					<div class="step__body">
+						<div class="step__text"><h3>Feel like yourself again.</h3><p>Take forward any relief you've gained over the protocol, plus 14 days of science-backed strategies to manage your IBS.</p></div>
+						<div class="step__img ph" data-label="step-4: person looking relieved / back to normal"></div>
+					</div>
 				</div>
 			</div>
-			<div class="step reveal">
-				<span class="n">2</span>
-				<div class="step__content">
-					<div class="step__img ph" data-label="step-2: the kit / box photo"></div>
-					<div class="step__text"><h3>Your 14-day kit arrives</h3><p>One OLP-2 protocol box: 30 gummies, your set of daily cards, a 14-day tracker, a pen, and access to the guided app.</p></div>
-				</div>
-			</div>
-			<div class="step reveal">
-				<span class="n">3</span>
-				<div class="step__content">
-					<div class="step__img ph" data-label="step-3: app + handwritten card"></div>
-					<div class="step__text"><h3>Fifteen minutes a day</h3><p>Each day the app walks you through a 3-step, science-backed protocol that includes physical handwriting to help rewire your thoughts.</p></div>
-				</div>
-			</div>
-			<div class="step reveal">
-				<span class="n">4</span>
-				<div class="step__content">
-					<div class="step__img ph" data-label="step-4: person looking relieved / back to normal"></div>
-					<div class="step__text"><h3>Feel like yourself again.</h3><p>Take forward any relief you've gained over the protocol, plus 14 days of science-backed strategies to manage your IBS.</p></div>
-				</div>
-			</div>
-		</div>
-		<div class="center" style="margin-top:38px">
-			<a class="btn btn--primary btn--lg" href="/quiz/ibs" onclick={() => ctaClick('steps')}>Start the assessment <span class="arrow">→</span></a>
 		</div>
 	</div>
 </section>
@@ -456,12 +473,12 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 
 /* ── Trust strip ─────────────────────────────────── */
 .trust { border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); }
-.trust .wrap { padding-top:44px; padding-bottom:40px; }
-.trust .lbl { text-align:center; font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:28px; }
-.trust .logos { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:clamp(22px,4vw,56px); }
-.trust .logos img { height:clamp(28px,3.5vw,40px); width:auto; opacity:.62; filter:grayscale(1); transition:opacity .2s; }
+.trust .wrap { padding-top:56px; padding-bottom:52px; }
+.trust .lbl { text-align:center; font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:38px; }
+.trust .logos { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:clamp(32px,5vw,72px); max-width:980px; margin:0 auto; }
+.trust .logos img { height:clamp(26px,3vw,36px); width:auto; opacity:.62; filter:grayscale(1); transition:opacity .2s; }
 .trust .logos img:hover { opacity:1; }
-.trust-line { text-align:center; margin:26px 0 0; font-size:14px; font-weight:700; color:var(--ink-soft); }
+.trust-line { text-align:center; margin:38px 0 0; font-size:14px; font-weight:700; color:var(--ink-soft); }
 .trust-line span { color:var(--accent-deep); font-weight:900; }
 
 /* ── Copables isn't right for everyone (redesigned) ── */
@@ -481,8 +498,8 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 
 /* C. Guarantee panel (focal blue-tint) */
 .guarantee-panel {
-	background:var(--green-tint); border-radius:var(--radius-lg); padding:clamp(32px,4.5vw,52px);
-	box-shadow:var(--shadow-sm); text-align:center; max-width:680px; margin:0 auto;
+	background:var(--green-tint); border:var(--frame-bw) solid var(--frame-ink); border-radius:var(--radius-lg); padding:clamp(32px,4.5vw,52px);
+	box-shadow:var(--frame-shadow-sm); text-align:center; max-width:680px; margin:0 auto;
 }
 .gp__top { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
 .gp__eyebrow { margin:0; color:var(--green-deep); }
@@ -505,7 +522,7 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .stat-arrow { font-size:clamp(28px,4vw,44px); font-weight:900; color:var(--accent); line-height:1; }
 .cite-grid { display:grid; grid-template-columns:1fr; gap:20px; max-width:860px; margin:0 auto; }
 @media (min-width:720px) { .cite-grid { grid-template-columns:1fr 1fr; } }
-.cite-card { background:var(--card); border:1px solid var(--line-2); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:14px; }
+.cite-card { background:var(--card); border:var(--frame-bw) solid var(--frame-ink); border-radius:var(--radius); padding:24px; box-shadow:var(--frame-shadow-sm); display:flex; flex-direction:column; gap:14px; }
 .cite-text { font-size:14.5px; line-height:1.55; color:var(--ink-2); margin:0; }
 .cite-link { font-weight:800; font-size:14px; color:var(--accent-deep); text-decoration:none; margin-top:auto; }
 .cite-link:hover { text-decoration:underline; }
@@ -518,7 +535,7 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .rating-line { margin-top:12px; font-weight:700; font-size:15px; color:var(--ink-soft); }
 .t-grid { display:grid; grid-template-columns:1fr; gap:20px; margin-top:12px; }
 @media (min-width:760px) { .t-grid { grid-template-columns:repeat(3,1fr); } }
-.t-card { background:var(--card); border:1px solid var(--line-2); border-radius:var(--radius); padding:26px 24px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; }
+.t-card { background:var(--card); border:var(--frame-bw) solid var(--frame-ink); border-radius:var(--radius); padding:26px 24px; box-shadow:var(--frame-shadow-sm); display:flex; flex-direction:column; }
 .t-card .t-head { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
 .avatar { flex:none; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-weight:800; color:#fff; font-size:16px; }
 .t-card .who { font-weight:800; font-size:15.5px; line-height:1.1; }
@@ -543,7 +560,7 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .node {
 	position:absolute; width:128px; height:128px; border-radius:50%;
 	display:grid; place-items:center; text-align:center; font-weight:800; font-size:13.5px; line-height:1.2;
-	box-shadow:var(--shadow-md); padding:8px;
+	border:var(--frame-bw) solid var(--frame-ink); box-shadow:var(--frame-shadow-sm); padding:8px;
 }
 .node small { display:block; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.7; margin-bottom:4px; }
 .node--gut   { top:50%; left:0; transform:translateY(-50%); background:var(--accent); color:#fff; }
@@ -552,10 +569,10 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 .node--anx   { bottom:0; left:50%; transform:translateX(-50%); background:var(--wine); color:#fff; }
 .loop .arc { position:absolute; inset:64px; border:3px dashed var(--line); border-radius:50%; }
 .loop .arrow { position:absolute; font-size:20px; font-weight:900; color:var(--accent-deep); line-height:1; }
-.loop .a1 { top:18%; left:18%; }
-.loop .a2 { top:18%; right:18%; }
-.loop .a3 { bottom:18%; right:18%; }
-.loop .a4 { bottom:18%; left:18%; }
+.loop .a1 { top:18%; left:18%; transform:rotate(45deg); }
+.loop .a2 { top:18%; right:18%; transform:rotate(45deg); }
+.loop .a3 { bottom:18%; right:18%; transform:rotate(45deg); }
+.loop .a4 { bottom:18%; left:18%; transform:rotate(45deg); }
 
 /* ── What's in the kit ───────────────────────────── */
 .kit-full { max-width:760px; margin:0 auto 44px; }
@@ -574,19 +591,53 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 	.ktile--app .ktile__img { aspect-ratio:16/9; }
 }
 
-/* ── Steps ───────────────────────────────────────── */
-.steps { display:grid; gap:16px; max-width:840px; margin:12px auto 0; }
-.step { display:grid; grid-template-columns:72px 1fr; gap:24px; align-items:center; background:var(--card); border:1px solid var(--line-2); border-radius:var(--radius); padding:26px 30px; box-shadow:var(--shadow-sm); }
-.step .n { width:56px; height:56px; border-radius:50%; background:var(--ink); color:var(--paper); display:grid; place-items:center; font-weight:800; font-size:24px; }
+/* ── Steps (Nerva-style timeline) ─────────────────── */
+.steps-layout { display:grid; grid-template-columns:1fr; gap:32px; }
+@media (min-width:900px) {
+	.steps-layout { grid-template-columns:minmax(280px,340px) 1fr; gap:64px; align-items:start; }
+	.steps-intro { position:sticky; top:90px; }
+}
+.steps-intro { display:flex; flex-direction:column; align-items:flex-start; gap:18px; }
+.steps-intro .eyebrow { margin-bottom:0; }
+.steps-intro h2 { margin:0; }
+.steps-intro .btn { margin-top:8px; }
+@media (max-width:640px) {
+	.steps-intro { align-items:center; text-align:center; }
+	.steps-intro .eyebrow { justify-content:center; }
+}
+
+.steps-timeline { position:relative; display:grid; gap:44px; }
+.steps-timeline::before {
+	content:""; position:absolute; left:27px; top:var(--line-top,54px); bottom:var(--line-bottom,54px); width:2px; background:var(--line);
+}
+@media (max-width:640px) { .steps-timeline::before { left:23px; } }
+
+.step { display:block; position:relative; margin-left:72px; background:var(--card); border:var(--frame-bw) solid var(--frame-ink); border-radius:var(--radius); padding:26px 30px; box-shadow:var(--frame-shadow-sm); }
+.step__marker { position:absolute; left:-72px; top:26px; z-index:1; }
+.step .n {
+	width:56px; height:56px; border-radius:50%;
+	background:var(--ink); color:var(--paper);
+	display:grid; place-items:center; font-weight:800; font-size:24px;
+}
 .step:nth-child(2) .n { background:var(--accent); }
 .step:nth-child(3) .n { background:var(--orange); }
 .step:nth-child(4) .n { background:var(--wine); }
-.step__content { display:grid; grid-template-columns:1fr; gap:18px; }
-@media (min-width:680px) { .step__content { grid-template-columns:200px 1fr; gap:28px; align-items:center; } }
-.step__img { aspect-ratio:4/3; border-radius:var(--frame-radius); border:var(--frame-bw) solid var(--frame-ink); box-shadow:var(--frame-shadow-sm); overflow:hidden; }
+
+.step__body { display:flex; flex-direction:column; gap:18px; }
+.step__text h3 { font-size:21px; margin:0 0 6px; }
+.step__text p { margin:0; font-size:15.5px; color:var(--ink-soft); line-height:1.55; }
+.step__img { aspect-ratio:16/9; border-radius:var(--frame-radius); border:var(--frame-bw) solid var(--frame-ink); box-shadow:var(--frame-shadow-sm); overflow:hidden; max-width:520px; }
 :global(.step__img img) { width:100%; height:100%; object-fit:cover; display:block; }
-.step h3 { font-size:21px; margin-bottom:6px; }
-.step p { margin:0; font-size:15.5px; color:var(--ink-soft); }
+
+@media (max-width:640px) {
+	.step { margin-left:60px; padding:20px; }
+	.step__marker { left:-60px; top:20px; }
+	.step .n { width:48px; height:48px; font-size:20px; }
+	.step__body { gap:14px; }
+	.step__text h3 { font-size:18px; }
+	.step__text p { font-size:14px; }
+	.step__img { aspect-ratio:4/3; max-width:none; }
+}
 
 /* ── Mobile-first polish (99% of traffic) ─────────── */
 @media (max-width:640px) {
@@ -608,11 +659,11 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 	.hero-stamp { left:12px; bottom:12px; padding:10px 12px; font-size:12px; }
 
 	/* trust strip */
-	.trust .wrap { padding-top:30px; padding-bottom:26px; }
-	.trust .lbl { font-size:10px; letter-spacing:.18em; margin-bottom:20px; }
-	.trust .logos { gap:18px 28px; }
-	.trust .logos img { height:30px; }
-	.trust-line { font-size:13px; margin-top:18px; }
+	.trust .wrap { padding-top:38px; padding-bottom:34px; }
+	.trust .lbl { font-size:10px; letter-spacing:.18em; margin-bottom:26px; }
+	.trust .logos { gap:22px 32px; }
+	.trust .logos img { height:26px; }
+	.trust-line { margin-top:26px; }
 
 	/* root cause diagram */
 	.split { gap:32px; }
@@ -639,19 +690,14 @@ h1,h2,h3 { margin:0; font-weight:800; line-height:1.0; letter-spacing:-0.03em; }
 	/* fit / guarantee */
 	.qual-grid { gap:16px; margin-bottom:36px; }
 	.qual-item { font-size:16px; gap:12px; }
-	.guarantee-panel { padding:28px 20px; border-radius:var(--radius); }
+	.guarantee-panel { padding:28px 20px; }
 	.gp__top { gap:10px; margin-bottom:16px; }
 	.gp__body { font-size:16px; margin-bottom:24px; }
 	.gp__steps { gap:18px; }
 	.gstep .rn { width:36px; height:36px; font-size:13px; }
 
 	/* four steps */
-	.steps { gap:14px; }
-	.step { grid-template-columns:1fr; text-align:center; padding:20px; gap:14px; }
-	.step .n { margin:0 auto; width:48px; height:48px; font-size:20px; }
-	.step__content { gap:14px; }
-	.step h3 { font-size:18px; }
-	.step p { font-size:14px; }
+	.steps-timeline { gap:32px; }
 
 	/* kit tiles */
 	.kit-full__img { aspect-ratio:4/3; }
