@@ -52,7 +52,16 @@
       "Bash(grep -vE \"DeprecationWarning|trace-deprecation|Unused CSS|svelte.dev/e/css|^\\\\s*[0-9]+:|^\\\\s*\\\\^|^\\\\s*$\")",
       "Bash(mv static/_headers ./_headers)",
       "Bash(rm -rf .svelte-kit/output)",
-      "Bash(node -e \"const s=require\\('./package.json'\\).scripts; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")"
+      "Bash(node -e \"const s=require\\('./package.json'\\).scripts; console.log\\(JSON.stringify\\(s,null,2\\)\\)\")",
+      "Bash(grep -rl \"How the protocol changes\" src/)",
+      "Bash(grep -rl \"OVER TIME\" src/)",
+      "Bash(grep -rl \"warmer baseline\" src/)",
+      "Bash(magick -background \"#F3E9D4\" .preview-chart.svg .preview-chart.png)",
+      "Bash(qlmanage -t -s 1200 -o . .preview-fit.html)",
+      "Bash(ls -la .preview-fit.html.png)",
+      "Bash(qlmanage -t -s 1200 -o . .preview-mech.html)",
+      "Bash(sed -e 's/border-left:9px/border-left:20px/' -e 's/border-top:5.5px/border-top:12px/' -e 's/border-bottom:5.5px/border-bottom:12px/' -e 's/rgba\\(20,19,15,.42\\)/#d11/' .preview-loop.html)",
+      "Bash(qlmanage -t -s 700 -o . .preview-loop2.html)"
     ]
   }
 }
